@@ -18,7 +18,6 @@
 -   Sass
 -   MVC
 -   PHP
--   JQuery
 -   mysql
 -   JavaScript
 -   TypeScript
