@@ -1,0 +1,19 @@
+@mixin breakpoint($point) {
+  @if $point == gridt {
+    @media screen and (max-width: 410px) {
+      @content;
+    }
+  } @else if $point == phones {
+    @media screen and (max-width: 768px) {
+      @content;
+    }
+  } @else if $point == desktops {
+    @media screen and (min-width: 385px) {
+      @content;
+    }
+  } @else if $point == tablets {
+    @media screen and (max-width: 1210px) {
+      @content;
+    }
+  }
+}

@@ -86,14 +86,55 @@ class viewRoute {
             $config = [
                 'title'  => 'welcome!',
                 'icon'   => 'welcome.png',
-                'script' => ['home.js', 'home_2.js'],
-                'style'  => ['home.css', 'home_2.css'],
+                'style'  => ['home.min.css'],
                 'up'     => 'header.php',
                 'middle' => 'home.php',
                 'low'    => 'footer.php',
 
             ];
             return $this->getConfig($config);
+        case '/admin':
+
+            if (isset($_COOKIE['admin'])) {
+
+                $config = [
+                    'title'  => 'Administrador',
+                    'icon'   => 'admin.png',
+                    'style'  => ['admin.min.css'],
+                    'script' => [
+                        'adminEffects.js',
+                        'usersOnline.js',
+                        'usersToday.js',
+                        'usersVisited.js',
+                    ],
+                    'up'     => 'headerAdmin.php',
+                    'middle' => 'admin.php',
+                    'low'    => 'footerAdmin.php',
+
+                ];
+                return $this->getConfig($config);
+
+            } else {
+
+                header('Location: logInAdmin');
+                exit();
+            }
+
+        case '/loginadmin':
+
+            $config = [
+                'title'  => 'Entrar como administrador!',
+                'icon'   => 'admin.png',
+                'style'  => ['admin.min.css'],
+                'up'     => 'headerAdmin.php',
+                'middle' => 'admin.php',
+                'low'    => 'footerAdmin.php',
+
+            ];
+            setcookie('admin', true, time() + 86400);
+
+            return $this->getConfig($config);
+
         }
 
     }

@@ -4,7 +4,7 @@ ob_start();
 
 define('DBDRIVE', 'mysql:');
 define('DBHOST', 'host=localhost;');
-define('DBNAME', 'dbname=database_02');
+define('DBNAME', 'dbname=db_apirest');
 define('DBUSER', 'root');
 define('DBPASS', '');
 
