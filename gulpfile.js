@@ -22,7 +22,6 @@ var suffixOptions = {
 var postCSSOptions = [
   autoprefixer(),
   postCSSNormalize({
-    browsers: 'last 2 versions',
     // forceImport: true,
   }),
 ]

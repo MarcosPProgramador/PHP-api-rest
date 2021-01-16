@@ -1,0 +1,2 @@
+class loginEffects {}
+new loginEffects()

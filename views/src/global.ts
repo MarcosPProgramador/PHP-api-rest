@@ -40,7 +40,7 @@ async function getContext<T>(api: string, callbackFn: Fn<T>) {
     return
   }
 }
-function _(Elm: string) {
+function _(Elm?: string) {
   const Query = (Element: string) => {
     return <HTMLElement>document.querySelector(Element)
   }
@@ -76,7 +76,7 @@ function _(Elm: string) {
     }
     if (Content) _child.textContent = Content
 
-    if (!Parent) Query(Elm).appendChild(_child)
+    if (!Parent) Query(Elm as string).appendChild(_child)
     else Querys(Parent, _index).appendChild(_child)
 
     return { Child }

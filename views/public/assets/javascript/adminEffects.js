@@ -17,6 +17,8 @@ var effects = /** @class */ (function () {
             });
         });
         this.effectShowFormUpdate();
+        this.showHeader();
+        this.animateNav();
     };
     effects.prototype.effectClickButton = function (target) {
         target.toggleClass('admin__button-more--active');
@@ -72,6 +74,25 @@ var effects = /** @class */ (function () {
             var target = _a.target;
             var nextElement = $(target).siblings()[0];
             $(nextElement).addClass('form__confirm-send--show');
+        });
+    };
+    effects.prototype.showHeader = function () {
+        var headerAdmin = document.querySelector('.headerAdmin__bg');
+        var footerAdmin = document.querySelector('.footerAdmin__bg');
+        setTimeout(function () {
+            headerAdmin.classList.add('headerAdmin__bg--active');
+            footerAdmin.classList.add('footerAdmin__bg--active');
+        }, 1000);
+    };
+    effects.prototype.animateNav = function () {
+        var btnToggle = document.getElementById('btn-toggle');
+        btnToggle === null || btnToggle === void 0 ? void 0 : btnToggle.addEventListener('click', function (_a) {
+            var target = _a.target;
+            ;
+            target.classList.toggle('headerAdmin__menu-button--active');
+            var dataToggle = (target.getAttribute('data-toggle'));
+            var navbarMobile = document.querySelector(dataToggle);
+            navbarMobile === null || navbarMobile === void 0 ? void 0 : navbarMobile.classList.toggle('headerAdmin__menu-mobile--active');
         });
     };
     return effects;

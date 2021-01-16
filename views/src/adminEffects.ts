@@ -16,7 +16,8 @@ class effects {
       })
     })
     this.effectShowFormUpdate()
-    
+    this.showHeader()
+    this.animateNav()
   }
 
   private effectClickButton(target: JQuery<HTMLElement>) {
@@ -75,6 +76,29 @@ class effects {
     $('#blue-send').on('click', ({ target }) => {
       const nextElement = $(target).siblings()[0]
       $(nextElement).addClass('form__confirm-send--show')
+    })
+  }
+  private showHeader() {
+    const headerAdmin = <HTMLElement>document.querySelector('.headerAdmin__bg')
+    const footerAdmin = <HTMLElement>document.querySelector('.footerAdmin__bg')
+    setTimeout(() => {
+      headerAdmin.classList.add('headerAdmin__bg--active')
+      footerAdmin.classList.add('footerAdmin__bg--active')
+    }, 1000)
+  }
+  private animateNav() {
+    const btnToggle = document.getElementById('btn-toggle')
+    btnToggle?.addEventListener('click', ({ target }) => {
+      ;(<HTMLButtonElement>target).classList.toggle(
+        'headerAdmin__menu-button--active'
+      )
+
+      const dataToggle = <string>(
+        (target as HTMLElement).getAttribute('data-toggle')
+      )
+
+      const navbarMobile = document.querySelector(dataToggle)
+      navbarMobile?.classList.toggle('headerAdmin__menu-mobile--active')
     })
   }
 }

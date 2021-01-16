@@ -1,13 +1,14 @@
 <?php
 namespace Routes;
 class viewRoute {
+    private static string $response;
     public function __construct() {
         include './views/public/template.php';
     }
 
-    public function getConfig($config) {
+    public static function getConfig($config) {
 
-        switch ($this->response) {
+        switch (self::$response) {
 
         case 'title':
             return $config['title'];
@@ -64,7 +65,12 @@ class viewRoute {
             }
 
         case 'up':
-            include "views/public/templates/{$config['up']}";
+            $path = "views/public/templates/{$config['up']}";
+
+            if (file_exists($path)) {
+                include $path;
+            }
+
             break;
 
         case 'middle':
@@ -72,14 +78,19 @@ class viewRoute {
             break;
 
         case 'low':
-            include "views/public/templates/{$config['low']}";
+            $path = "views/public/templates/{$config['low']}";
+
+            if (file_exists($path)) {
+                include $path;
+            }
+
             break;
         }
 
     }
 
-    public function setConfig($response) {
-        $this->response = strtolower($response);
+    public static function setConfig($response) {
+        self::$response = strtolower($response);
 
         switch (\tasks::Endpoint()) {
         case '/home':
@@ -92,7 +103,19 @@ class viewRoute {
                 'low'    => 'footer.php',
 
             ];
-            return $this->getConfig($config);
+            return self::getConfig($config);
+        case '/login':
+            $config = [
+                'title'  => 'Log In',
+                'icon'   => 'login.png',
+                'script' => ['loginEffects.js'],
+                'style'  => ['login.min.css'],
+                'up'     => 'headerIn.php',
+                'middle' => 'login.php',
+                'low'    => 'footerIn.php',
+
+            ];
+            return self::getConfig($config);
         case '/admin':
 
             if (isset($_COOKIE['admin'])) {
@@ -100,7 +123,9 @@ class viewRoute {
                 $config = [
                     'title'  => 'Administrador',
                     'icon'   => 'admin.png',
-                    'style'  => ['admin.min.css'],
+                    'style'  => [
+                        'admin.min.css',
+                    ],
                     'script' => [
                         'adminEffects.js',
                         'usersOnline.js',
@@ -112,7 +137,7 @@ class viewRoute {
                     'low'    => 'footerAdmin.php',
 
                 ];
-                return $this->getConfig($config);
+                return self::getConfig($config);
 
             } else {
 
@@ -133,7 +158,8 @@ class viewRoute {
             ];
             setcookie('admin', true, time() + 86400);
 
-            return $this->getConfig($config);
+            header('Location: admin');
+            return self::getConfig($config);
 
         }
 
