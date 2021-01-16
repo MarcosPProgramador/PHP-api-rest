@@ -95,7 +95,7 @@ a {
           }
           .headerAdmin__menu-button {
             position: relative;
-            z-index: 51;
+            z-index: 53;
             display: none !important;
             cursor: pointer;
             @include breakpoint(phones) {
