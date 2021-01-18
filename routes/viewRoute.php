@@ -108,7 +108,10 @@ class viewRoute {
             $config = [
                 'title'  => 'Log In',
                 'icon'   => 'login.png',
-                'script' => ['loginEffects.js'],
+                'script' => [
+                    'loginEffects.js', 
+                    'login.js'
+                ],
                 'style'  => ['login.min.css'],
                 'up'     => 'headerIn.php',
                 'middle' => 'login.php',
