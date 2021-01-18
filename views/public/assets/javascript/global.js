@@ -72,6 +72,14 @@ function _(Elm) {
     var Querys = function (Element, Index) {
         return document.querySelectorAll(Element)[Index];
     };
+    var Event = function (eventStr, callbackFn) {
+        if (typeof Elm == 'string') {
+            Query(Elm).addEventListener(eventStr, callbackFn);
+        }
+        else {
+            Elm.addEventListener(eventStr, callbackFn);
+        }
+    };
     var _index = 0;
     var Child = function (_a) {
         var Element = _a.Element, Index = _a.Index, Parent = _a.Parent, Class = _a.Class, Content = _a.Content, Attribute = _a.Attribute;
@@ -99,5 +107,30 @@ function _(Elm) {
             Querys(Parent, _index).appendChild(_child);
         return { Child: Child };
     };
-    return { Child: Child };
+    return { Child: Child, Event: Event };
 }
+var __ = {
+    ajax: function (_a) {
+        var dataType = _a.dataType, method = _a.method, url = _a.url, beforeSend = _a.beforeSend, success = _a.success, data = _a.data;
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = dataType;
+        xhr.open(method, url, true);
+        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 3)
+                if (beforeSend)
+                    beforeSend();
+            if (xhr.readyState === 4)
+                success(xhr.response);
+        };
+        if (method != 'get') {
+            var dataStr = '';
+            for (var key in data) {
+                dataStr += key + "=" + data[key] + "&";
+            }
+            xhr.send(dataStr.slice(0, -1));
+        }
+        else
+            xhr.send();
+    },
+};
