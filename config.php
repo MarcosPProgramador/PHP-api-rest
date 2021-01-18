@@ -21,6 +21,7 @@ spl_autoload_register(function ($class) {
         "./services/$class.php",
         "./routes/$class.php",
         "./apis/$class.php",
+        "./ajax/$class.php",
     ];
 
     foreach ($paths as $path) {

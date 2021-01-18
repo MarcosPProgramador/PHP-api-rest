@@ -1,2 +1,1 @@
-class loginEffects {}
-new loginEffects()
+

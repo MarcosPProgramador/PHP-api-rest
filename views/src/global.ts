@@ -6,6 +6,7 @@ interface Attribute {
 interface Elements {
   Element: string
   Class: string | string[]
+
   Index?: number
   Parent?: string
   Content?: string
@@ -18,6 +19,14 @@ interface Elements {
     Attribute?,
     Attribute?
   ]
+}
+interface datasAjax {
+  method: string
+  dataType: 'json'
+  url: string
+  data?: any
+  beforeSend?: () => void
+  success: (datas: any) => void
 }
 type ApiRest<N> = {
   status: string
@@ -40,12 +49,24 @@ async function getContext<T>(api: string, callbackFn: Fn<T>) {
     return
   }
 }
-function _(Elm?: string) {
+function _(Elm: string | HTMLElement) {
   const Query = (Element: string) => {
     return <HTMLElement>document.querySelector(Element)
   }
   const Querys = (Element: string, Index: number) => {
     return document.querySelectorAll(Element)[Index]
+  }
+  type events = 'click' | 'change' | 'focus' | 'keyup' | 'keypress' | 'keydown'
+
+  const Event = (
+    eventStr: events,
+    callbackFn: (ev: Event | MouseEvent | FocusEvent | KeyboardEvent) => void
+  ) => {
+    if (typeof Elm == 'string') {
+      Query(Elm as string).addEventListener(eventStr, callbackFn)
+    } else {
+      Elm.addEventListener(eventStr, callbackFn)
+    }
   }
 
   let _index = 0
@@ -82,5 +103,30 @@ function _(Elm?: string) {
     return { Child }
   }
 
-  return { Child }
+  return { Child, Event }
+}
+
+const __ = {
+  ajax({ dataType, method, url, beforeSend, success, data }: datasAjax) {
+    const xhr = new XMLHttpRequest()
+
+    xhr.responseType = dataType
+
+    xhr.open(method, url, true)
+    xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
+
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 3) if (beforeSend) beforeSend()
+      if (xhr.readyState === 4) success(xhr.response)
+    }
+
+    if (method != 'get') {
+      let dataStr = ''
+      for (const key in data) {
+        dataStr += `${key}=${data[key]}&`
+      }
+
+      xhr.send(dataStr.slice(0, -1))
+    } else xhr.send()
+  },
 }
