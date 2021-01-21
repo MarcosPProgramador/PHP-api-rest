@@ -56,8 +56,13 @@ function _(Elm: string | HTMLElement) {
   const Querys = (Element: string, Index: number) => {
     return document.querySelectorAll(Element)[Index]
   }
+  const Toggle = (cls: string) => {
+    ;(Elm as HTMLElement).classList.toggle(cls)
+  }
+  const Content = (content: string) => {
+    Query(<string>Elm).textContent = content
+  }
   type events = 'click' | 'change' | 'focus' | 'keyup' | 'keypress' | 'keydown'
-
   const Event = (
     eventStr: events,
     callbackFn: (ev: Event | MouseEvent | FocusEvent | KeyboardEvent) => void
@@ -103,7 +108,7 @@ function _(Elm: string | HTMLElement) {
     return { Child }
   }
 
-  return { Child, Event }
+  return { Child, Event, Content, Toggle }
 }
 
 const __ = {

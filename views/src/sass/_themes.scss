@@ -1,0 +1,32 @@
+.dark-theme {
+  --primary: rgb(36, 38, 49);
+  --secondary: rgb(27, 28, 37);
+  --ternary: rgb(18, 18, 26);
+  --text: #f0f8ff;
+  --text-secondary: #8d99ae;
+  --text-ternary: #222;
+  --disabled: #8d99ae;
+  --white: #fff;
+  --error: red;
+  --success: green;
+  --form: rgba(0, 0, 0, 0.8);
+  --red: #f74949;
+  --blue: #5d6be4;
+  --green: #6df7ab;
+}
+.light-theme {
+  --primary: #f0f8ff;
+  --secondary: #dedfe0fb;
+  --ternary: rgb(117, 128, 134);
+  --text: #0b0c13;
+  --text-secondary: #525b6b;
+  --text-ternary: rgb(228, 228, 228);
+  --disabled: #8d99ae;
+  --error: red;
+  --white: #fff;
+  --success: green;
+  --form: rgba(0, 0, 0, 0.8);
+  --red: #f74949;
+  --blue: #5d6be4;
+  --green: #6df7ab;
+}

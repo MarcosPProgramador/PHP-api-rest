@@ -1,29 +1,6 @@
 @import './breakpoints';
-.dark-theme {
-  --primary: rgb(36, 38, 49);
-  --secondary: rgb(27, 28, 37);
-  --ternary: rgb(18, 18, 26);
-  --text: #f0f8ff;
-  --text-secondary: #8d99ae;
-  --text-ternary: #222;
-  --disabled: #8d99ae;
-  --white: #fff;
-  --red: #f74949;
-  --blue: #5d6be4;
-  --green: #6df7ab;
-}
-.light-theme {
-  --primary: #f0f8ff;
-  --secondary: #dedfe0fb;
-  --ternary: rgb(117, 128, 134);
-  --text: #0b0c13;
-  --text-secondary: #525b6b;
-  --text-ternary: rgb(228, 228, 228);
-  --disabled: #8d99ae;
-  --red: #f74949;
-  --blue: #5d6be4;
-  --green: #6df7ab;
-}
+@import './themes';
+
 .background-bg {
   overflow-y: auto;
   color: var(--text);
@@ -206,7 +183,7 @@ a {
   gap: 3px;
   row-gap: 15px;
   @include breakpoint(gridt) {
-    grid-template-columns: calc(100% - 10px);
+    grid-template-columns: 100%;
   }
 
   .admin__users-count {
@@ -264,6 +241,7 @@ a {
       height: calc(100% - 35px);
       width: 100%;
       border-radius: 10px;
+
       background-color: var(--secondary);
       display: flex;
       position: relative;
@@ -554,6 +532,10 @@ a {
             }
           }
           margin-left: 20px;
+          @include breakpoint(phones) {
+            margin-left: 0;
+          }
+
           .admin__user-today {
             &:nth-child(1) {
               margin-top: 100px;
@@ -586,7 +568,7 @@ a {
           border: 10px solid var(--ternary);
           background-color: var(--ternary);
           border-radius: 20px;
-          padding: 10px 12px;
+          padding: 10px 0;
 
           &.admin__users-today-info--active {
             &.blue {
@@ -767,6 +749,9 @@ a {
     }
     .admin__users-today-info {
       padding-right: 100px !important;
+      @include breakpoint(phones) {
+        padding-right: 16px !important;
+      }
       transform: translateY(-500px);
       transition: 500ms transform cubic-bezier(0.075, 0.82, 0.165, 1);
       &.admin__users-today-info--active {
@@ -835,6 +820,11 @@ a {
             @include breakpoint(desktops) {
               margin-left: 60px;
             }
+            @include breakpoint(phones) {
+              max-width: 20px;
+              text-overflow: ellipsis;
+              overflow: hidden;
+            }
           }
           .admin__config-open {
             &.admin__config-open--active {
@@ -848,7 +838,14 @@ a {
             display: none;
             flex-direction: column;
             position: absolute;
+            z-index: 2;
+            @include breakpoint(phones) {
+              right: -40px;
+
+              padding: 2px 5px;
+            }
             &::after {
+              z-index: 1;
               content: '';
               position: absolute;
               bottom: 10px;
@@ -863,6 +860,9 @@ a {
               color: #000;
               cursor: pointer;
               background-color: transparent;
+              @include breakpoint(phones) {
+                font-size: 10px;
+              }
               &:active {
                 transform: scale(1.1);
               }

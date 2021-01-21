@@ -6,7 +6,8 @@
                     <div class="headerAdmin__padding">
                         <div class="headerAdmin__flex">
                             <div class="headerAdmin__logo">
-                            <a href="<?php echo PATH ?>admin">
+                                <a href="<?php echo PATH ?>admin">
+
                                     <svg
                                         version="1.1"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -38,14 +39,30 @@
                                             C475.078,202.133,457.19,236.016,421.405,271.795z"
                                         />
                                     </svg>
-                            </a>
+                                </a>
                             </div>
                             <nav class="headerAdmin__menu">
                                 <ul class="menu__list">
-                                    <li class="menu__tab"><a href="<?php echo PATH ?>login" class="menu__link">Login</a></li>
-                                    <li class="menu__tab"><a href="<?php echo PATH ?>admin" class="menu__link">Admin</a></li>
-                                    <li class="menu__tab"><a href="<?php echo PATH ?>clients" class="menu__link">Clients</a></li>
-                                    <li class="menu__tab"><a href="<?php echo PATH ?>products" class="menu__link">Products</a></li>
+                                    <li class="menu__tab">
+                                        <a href="<?php echo PATH ?>login" class="menu__link">Log In</a>
+                                    </li>
+
+                                    <li class="menu__tab">
+                                        <a href="<?php echo PATH ?>logInAdmin" class="menu__link">Log In Admin</a>
+                                    </li>
+
+                                    <li class="menu__tab">
+                                        <a href="<?php echo PATH ?>admin" class="menu__link">Admin</a>
+                                    </li>
+
+                                    <li class="menu__tab">
+                                        <a href="<?php echo PATH ?>clients" class="menu__link">Clients</a>
+                                    </li>
+
+                                    <li class="menu__tab">
+                                        <a href="<?php echo PATH ?>products" class="menu__link">Products</a>
+                                    </li>
+
                                 </ul>
                             </nav>
                             <button class="headerAdmin__menu-button" id="btn-toggle" data-toggle="#navbar">
@@ -54,10 +71,26 @@
                             </button>
                             <nav class="headerAdmin__menu-mobile" id="navbar">
                                 <ul class="menu__list">
-                                    <li class="menu__tab"><a href="<?php echo PATH ?>login" class="menu__link">Login</a></li>
-                                    <li class="menu__tab"><a href="<?php echo PATH ?>admin" class="menu__link">Admin</a></li>
-                                    <li class="menu__tab"><a href="<?php echo PATH ?>clients" class="menu__link">Clients</a></li>
-                                    <li class="menu__tab"><a href="<?php echo PATH ?>products" class="menu__link">Products</a></li>
+                                    <li class="menu__tab">
+                                        <a href="<?php echo PATH ?>login" class="menu__link">Log In</a>
+                                    </li>
+
+                                    <li class="menu__tab">
+                                        <a href="<?php echo PATH ?>logInAdmin" class="menu__link">Log In Admin</a>
+                                    </li>
+
+                                    <li class="menu__tab">
+                                        <a href="<?php echo PATH ?>admin" class="menu__link">Admin</a>
+                                    </li>
+
+                                    <li class="menu__tab">
+                                        <a href="<?php echo PATH ?>clients" class="menu__link">Clients</a>
+                                    </li>
+
+                                    <li class="menu__tab">
+                                        <a href="<?php echo PATH ?>products" class="menu__link">Products</a>
+                                    </li>
+
                                 </ul>
                             </nav>
                         </div>

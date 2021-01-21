@@ -65,7 +65,8 @@ class viewRoute {
             }
 
         case 'up':
-            $path = "views/public/templates/{$config['up']}";
+            $up = $config['up'] ?? 'undefined';
+            $path = "views/public/templates/$up";
 
             if (file_exists($path)) {
                 include $path;
@@ -78,7 +79,8 @@ class viewRoute {
             break;
 
         case 'low':
-            $path = "views/public/templates/{$config['low']}";
+            $low = $config['low'] ?? 'undefined';
+            $path = "views/public/templates/$low";
 
             if (file_exists($path)) {
                 include $path;
@@ -94,34 +96,40 @@ class viewRoute {
 
         switch (\tasks::Endpoint()) {
         case '/home':
-            $config = [
-                'title'  => 'welcome!',
-                'icon'   => 'welcome.png',
-                'style'  => ['home.min.css'],
-                'up'     => 'header.php',
-                'middle' => 'home.php',
-                'low'    => 'footer.php',
 
-            ];
-            return self::getConfig($config);
+            if (isset($_SESSION['logged'])) {
+                $config = [
+                    'title'  => 'Bem-vindo(a)!',
+                    'icon'   => 'welcome.png',
+                    'style'  => ['home.min.css'],
+                    'up'     => 'header.php',
+                    'middle' => 'home.php',
+                    'low'    => 'footer.php',
+
+                ];
+
+                return self::getConfig($config);
+            } else {
+                header('Location: logIn');
+                exit();
+            }
+
         case '/login':
             $config = [
-                'title'  => 'Log In',
+                'title'  => 'Faça Login',
                 'icon'   => 'login.png',
                 'script' => [
-                    'loginEffects.js', 
-                    'login.js'
+                    'login.js',
+                    'loginEffects.js',
                 ],
                 'style'  => ['login.min.css'],
-                'up'     => 'headerIn.php',
                 'middle' => 'login.php',
-                'low'    => 'footerIn.php',
 
             ];
             return self::getConfig($config);
         case '/admin':
 
-            if (isset($_COOKIE['admin'])) {
+            if (isset($_COOKIE['loggedAdmin'])) {
 
                 $config = [
                     'title'  => 'Administrador',
@@ -152,16 +160,16 @@ class viewRoute {
 
             $config = [
                 'title'  => 'Entrar como administrador!',
-                'icon'   => 'admin.png',
-                'style'  => ['admin.min.css'],
-                'up'     => 'headerAdmin.php',
-                'middle' => 'admin.php',
-                'low'    => 'footerAdmin.php',
+                'icon'   => 'loginAdmin.png',
+                'style'  => ['loginAdmin.min.css'],
+                'script' => [
+                    'loginAdmin.js',
+                    'loginAdminEffects.js',
+                ],
+                'middle' => 'loginAdmin.php',
 
             ];
-            setcookie('admin', true, time() + 86400);
 
-            header('Location: admin');
             return self::getConfig($config);
 
         }

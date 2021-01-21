@@ -3,9 +3,10 @@ var logIn = /** @class */ (function () {
     function logIn() {
         this.Email();
         this.Password();
+        this.requestAjaxSendEmailPassword();
     }
     logIn.prototype.isValid = function (formInputValue) {
-        if (formInputValue.match(/[a-zA-Z]/g) && formInputValue)
+        if (formInputValue.match(/[a-zA-Z0-9]/g) && formInputValue)
             return true;
         return false;
     };
@@ -46,11 +47,75 @@ var logIn = /** @class */ (function () {
             method: 'post',
             dataType: 'json',
             data: (_a = {}, _a[input] = formInputValue, _a),
-            url: 'http://localhost/projetos/linguagens/PHP_api-rest/params/ajax/login',
-            success: function (_a) {
-                var datas = _a.datas;
-                console.log(datas);
+            url: 'http://localhost/projetos/linguagens/PHP_api-rest/controller/ajax/login',
+            success: function (data) {
+                var emailErrorMessage = _('#emailErrorMessage');
+                var passwordErrorMessage = _('#passwordErrorMessage');
+                var emailSuccessMessage = _('#emailSuccessMessage');
+                var passwordSuccessMessage = _('#passwordSuccessMessage');
+                var message = data.message;
+                var statusSuccess = data.statusSuccess;
+                if (!statusSuccess) {
+                    if (input == 'email') {
+                        emailSuccessMessage.Content('');
+                        emailErrorMessage.Content(message);
+                        localStorage.removeItem('email');
+                    }
+                    else {
+                        passwordSuccessMessage.Content('');
+                        passwordErrorMessage.Content(message);
+                        localStorage.removeItem('pass');
+                    }
+                }
+                else {
+                    if (input == 'email') {
+                        emailErrorMessage.Content('');
+                        emailSuccessMessage.Content(message);
+                        localStorage.setItem('email', 'true');
+                    }
+                    else {
+                        passwordErrorMessage.Content('');
+                        passwordSuccessMessage.Content(message);
+                        localStorage.setItem('pass', 'true');
+                    }
+                }
+                var email = localStorage.getItem('email');
+                var pass = localStorage.getItem('pass');
+                var formloginAction = (document.querySelector('#formlogin-action'));
+                if (email && pass) {
+                    formloginAction.classList.remove('formlogin__submit--disabled');
+                }
+                else
+                    formloginAction.classList.add('formlogin__submit--disabled');
             },
+        });
+    };
+    logIn.prototype.requestAjaxSendEmailPassword = function () {
+        $('#formlogin-action').on('click', function (e) {
+            e.preventDefault();
+            __.ajax({
+                method: 'post',
+                dataType: 'json',
+                data: {
+                    emailSend: $('#formlogin-email').val(),
+                    passwordSend: $('#formlogin-password').val(),
+                },
+                url: 'http://localhost/projetos/linguagens/PHP_api-rest/controller/ajax/login',
+                success: function (datas) {
+                    if (!datas.statusSuccess) {
+                        var passwordErrorMessage = (document.querySelector('#passwordErrorMessage'));
+                        var passwordSuccessMessage = (document.querySelector('#passwordSuccessMessage'));
+                        var formloginAction = (document.querySelector('#formlogin-action'));
+                        passwordSuccessMessage.innerText = '';
+                        passwordErrorMessage.innerText = datas.message;
+                        formloginAction.classList.add('formlogin__submit--disabled');
+                    }
+                    else {
+                        location.href =
+                            'http://localhost/projetos/linguagens/PHP_api-rest/home';
+                    }
+                },
+            });
         });
     };
     return logIn;

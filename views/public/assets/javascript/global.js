@@ -72,6 +72,13 @@ function _(Elm) {
     var Querys = function (Element, Index) {
         return document.querySelectorAll(Element)[Index];
     };
+    var Toggle = function (cls) {
+        ;
+        Elm.classList.toggle(cls);
+    };
+    var Content = function (content) {
+        Query(Elm).textContent = content;
+    };
     var Event = function (eventStr, callbackFn) {
         if (typeof Elm == 'string') {
             Query(Elm).addEventListener(eventStr, callbackFn);
@@ -107,7 +114,7 @@ function _(Elm) {
             Querys(Parent, _index).appendChild(_child);
         return { Child: Child };
     };
-    return { Child: Child, Event: Event };
+    return { Child: Child, Event: Event, Content: Content, Toggle: Toggle };
 }
 var __ = {
     ajax: function (_a) {
