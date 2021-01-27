@@ -112,7 +112,7 @@ var logIn = /** @class */ (function () {
                     }
                     else {
                         location.href =
-                            'http://localhost/projetos/linguagens/PHP_api-rest/home';
+                            'http://localhost/projetos/linguagens/PHP_api-rest/products';
                     }
                 },
             });
