@@ -77,7 +77,12 @@ function _(Elm) {
         Elm.classList.toggle(cls);
     };
     var Content = function (content) {
-        Query(Elm).textContent = content;
+        if (typeof Elm == 'string') {
+            Query(Elm).textContent = content;
+        }
+        else {
+            Elm.textContent = content;
+        }
     };
     var Event = function (eventStr, callbackFn) {
         if (typeof Elm == 'string') {
@@ -114,7 +119,19 @@ function _(Elm) {
             Querys(Parent, _index).appendChild(_child);
         return { Child: Child };
     };
-    return { Child: Child, Event: Event, Content: Content, Toggle: Toggle };
+    var css = function (style) {
+        for (var skey in style) {
+            var key = skey.replace(/([A-Z])/, '-$1').toLowerCase();
+            var value = style[skey];
+            if (typeof Elm === 'string') {
+                Query(Elm).style.setProperty(key, value);
+            }
+            else {
+                Elm.style.setProperty(key, value);
+            }
+        }
+    };
+    return { Child: Child, Event: Event, Content: Content, Toggle: Toggle, css: css };
 }
 var __ = {
     ajax: function (_a) {
