@@ -1,7 +1,7 @@
 <?php
 session_start();
 ob_start();
-
+date_default_timezone_set('America/Sao_paulo');
 define('DBDRIVE', 'mysql:');
 define('DBHOST', 'host=localhost;');
 define('DBNAME', 'dbname=db_apirest');

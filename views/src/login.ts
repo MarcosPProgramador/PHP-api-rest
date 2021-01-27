@@ -125,7 +125,7 @@ class logIn {
             formloginAction.classList.add('formlogin__submit--disabled')
           } else {
             location.href =
-              'http://localhost/projetos/linguagens/PHP_api-rest/home'
+              'http://localhost/projetos/linguagens/PHP_api-rest/products'
           }
         },
       })

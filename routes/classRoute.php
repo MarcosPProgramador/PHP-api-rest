@@ -5,6 +5,13 @@ class classRoute {
 
         $endpoint = \tasks::Endpoint();
 
+        switch ($endpoint) {
+        case '/signup':
+            \tasks::Class('\Controllers\signUpController');
+            break;
+
+        }
+
         if (preg_match('/^[service|controller\/ajax]+[\/a-z0-9]{0,100}$/i', $endpoint)) {
             \tasks::Class('\Ajax\requestAjax');
         }

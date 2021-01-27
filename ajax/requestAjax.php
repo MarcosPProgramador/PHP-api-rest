@@ -23,10 +23,10 @@ class requestAjax {
             if (isset($nameServiceOrController)) {
 
                 $method = strtolower($_SERVER['REQUEST_METHOD']);
-                $service = "\\{$serviceOrController}s\\{$nameServiceOrController}{$serviceOrController}";
+                $class = "\\{$serviceOrController}s\\{$nameServiceOrController}{$serviceOrController}";
 
-                if (\method_exists($service, $method)) {
-                    $response = call_user_func([$service, $method]);
+                if (\method_exists($class, $method)) {
+                    $response = call_user_func([$class, $method]);
 
                     http_response_code(200);
                     echo json_encode($response, JSON_UNESCAPED_UNICODE);

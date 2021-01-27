@@ -60,9 +60,20 @@ function _(Elm: string | HTMLElement) {
     ;(Elm as HTMLElement).classList.toggle(cls)
   }
   const Content = (content: string) => {
-    Query(<string>Elm).textContent = content
+    if (typeof Elm == 'string') {
+      Query(<string>Elm).textContent = content
+    } else {
+      Elm.textContent = content
+    }
   }
-  type events = 'click' | 'change' | 'focus' | 'keyup' | 'keypress' | 'keydown'
+  type events =
+    | 'click'
+    | 'change'
+    | 'focus'
+    | 'keyup'
+    | 'keypress'
+    | 'keydown'
+    | 'blur'
   const Event = (
     eventStr: events,
     callbackFn: (ev: Event | MouseEvent | FocusEvent | KeyboardEvent) => void
@@ -107,8 +118,20 @@ function _(Elm: string | HTMLElement) {
 
     return { Child }
   }
+  const css = (style: { [key: string]: string }) => {
+    for (const skey in style) {
+      const key = skey.replace(/([A-Z])/, '-$1').toLowerCase()
+      const value = style[skey]
 
-  return { Child, Event, Content, Toggle }
+      if (typeof Elm === 'string') {
+        Query(Elm).style.setProperty(key, value)
+      } else {
+        Elm.style.setProperty(key, value)
+      }
+    }
+  }
+
+  return { Child, Event, Content, Toggle, css }
 }
 
 const __ = {

@@ -15,7 +15,7 @@ class logInModel {
                     'response'  => 'Não possui @',
                 ],
                 [
-                    'condition' => !preg_match('/^[A-Z0-9]{2,20}+\@+[A-Z]{2,16}+\.+([A-Z]){3,4}+$/i', $value),
+                    'condition' => !preg_match('/^([\w.-ç]{3,30})(\@)([A-Z]{3,20})((\.)([A-Z]{2,4}))((\.)([A-Z]{2}))?+$/i', $value),
                     'response'  => 'Ainda está faltando algo :(',
                 ],
             ];
@@ -53,24 +53,16 @@ class logInModel {
         case 'password':
             $conditions = [
                 [
-                    'condition' => !preg_match('/[A-Z]/i', $value),
-                    'response'  => 'Não possui letras',
-                ],
-                [
-                    'condition' => !preg_match('/\d/', $value),
-                    'response'  => 'Não possui números',
-                ],
-                [
-                    'condition' => !preg_match('/\@|\$|\!|\&|\*|\#|\%/', $value),
-                    'response'  => 'Não possui nenhum caracter especial #@!$%&*',
-                ],
-                [
                     'condition' => (strlen($value) < 10),
                     'response'  => 'O mínimo de caracteres é 10',
                 ],
                 [
                     'condition' => (strlen($value) > 40),
                     'response'  => 'O máximo de caracteres é 40',
+                ],
+                [
+                    'condition' => !preg_match('/^([\w!@#$%&*]{10,40})+$/i', $value),
+                    'response'  => 'Ainda está faltando algo :(',
                 ],
             ];
 

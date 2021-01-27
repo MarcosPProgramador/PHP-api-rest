@@ -7,6 +7,18 @@
     @media screen and (max-width: 768px) {
       @content;
     }
+  } @else if $point == phones-2 {
+    @media screen and (max-width: 600px) {
+      @content;
+    }
+  } @else if $point == phones-3 {
+    @media screen and (max-width: 500px) {
+      @content;
+    }
+  } @else if $point == phones-4 {
+    @media screen and (max-width: 400px) {
+      @content;
+    }
   } @else if $point == desktops {
     @media screen and (min-width: 385px) {
       @content;

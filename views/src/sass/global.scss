@@ -302,3 +302,15 @@ main {
 main {
   overflow-y: auto;
 }
+input {
+  border-radius: 0.2px;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px rgb(7, 7, 7) inset !important;
+}
+input:-webkit-autofill {
+  -webkit-text-fill-color: var(--white) !important;
+}

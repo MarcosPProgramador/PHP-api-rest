@@ -95,9 +95,9 @@ class viewRoute {
         self::$response = strtolower($response);
 
         switch (\tasks::Endpoint()) {
-        case '/home':
+        case '/products':
 
-            if (isset($_SESSION['logged'])) {
+            if (isset($_COOKIE['logged'])) {
                 $config = [
                     'title'  => 'Bem-vindo(a)!',
                     'icon'   => 'welcome.png',
@@ -114,6 +114,19 @@ class viewRoute {
                 exit();
             }
 
+        case '/signup':
+            $config = [
+                'title'  => 'Cadastre-se',
+                'icon'   => 'signUp.png',
+                'script' => [
+                    'signUp.js',
+                    'signUpEffects.js',
+                ],
+                'style'  => ['signUp.min.css'],
+                'middle' => 'signUp.php',
+
+            ];
+            return self::getConfig($config);
         case '/login':
             $config = [
                 'title'  => 'Faça Login',
