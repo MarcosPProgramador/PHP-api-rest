@@ -4,7 +4,7 @@
 
 ### Preview
 
--   desktop **(1568 x 758)**
+-   desktop **(1568 x 748)**
 
     ![desktop](./views/public/assets/img/layout-desktop.png)
 -   mobile **(280 x 653)**
