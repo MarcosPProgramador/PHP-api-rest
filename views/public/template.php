@@ -1,3 +1,5 @@
+<?php self::setConfig('php')?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

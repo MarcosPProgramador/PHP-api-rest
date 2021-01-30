@@ -52,11 +52,11 @@
                                     </li>
 
                                     <li class="menu__tab">
-                                        <a href="<?php echo PATH ?>admin" class="menu__link">Admin</a>
+                                        <a href="<?php echo PATH ?>signUp" class="menu__link">Sign Up</a>
                                     </li>
 
                                     <li class="menu__tab">
-                                        <a href="<?php echo PATH ?>clients" class="menu__link">Clients</a>
+                                        <a href="<?php echo PATH ?>admin" class="menu__link">Admin</a>
                                     </li>
 
                                     <li class="menu__tab">

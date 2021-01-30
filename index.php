@@ -7,7 +7,7 @@ class tasks {
     }
 
     public static function Endpoint() {
-        $endpoint = $_GET['url'] ?? 'home';
+        $endpoint = $_GET['url'] ?? 'products';
         $endpoint = strtolower($endpoint);
         $arr = explode('/', $endpoint);
 
@@ -25,5 +25,4 @@ class tasks {
 
 }
 
-\tasks::Class('\Routes\classRoute');
-\tasks::Class('\Routes\viewRoute');
+\tasks::Class('\Controllers\controller');

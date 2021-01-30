@@ -1,6 +1,6 @@
 <?php
-namespace Routes;
-class viewRoute {
+namespace Controllers;
+class controller {
     private static string $response;
     public function __construct() {
         include './views/public/template.php';
@@ -87,24 +87,41 @@ class viewRoute {
             }
 
             break;
+        case 'php':
+            $php = $config['php'] ?? null;
+
+            if ($php) {
+
+                foreach ($php as $value) {
+                    \tasks::Class($value);
+                }
+
+            }
+
+            break;
         }
 
     }
 
     public static function setConfig($response) {
         self::$response = strtolower($response);
+        $endpoint = \tasks::Endpoint();
 
-        switch (\tasks::Endpoint()) {
+        switch ($endpoint) {
         case '/products':
 
             if (isset($_COOKIE['logged'])) {
                 $config = [
                     'title'  => 'Bem-vindo(a)!',
                     'icon'   => 'welcome.png',
-                    'style'  => ['home.min.css'],
-                    'up'     => 'header.php',
-                    'middle' => 'home.php',
-                    'low'    => 'footer.php',
+                    'style'  => ['products.min.css'],
+                    'script' => [
+                      'products.js',
+                      'productsEffects.js'
+                    ],
+                    'up'     => 'headerProducts.php',
+                    'middle' => 'products.php',
+                    'low'    => 'footerProducts.php',
 
                 ];
 
@@ -122,6 +139,7 @@ class viewRoute {
                     'signUp.js',
                     'signUpEffects.js',
                 ],
+                'php'    => ['\Controllers\signUpController'],
                 'style'  => ['signUp.min.css'],
                 'middle' => 'signUp.php',
 
@@ -185,6 +203,15 @@ class viewRoute {
 
             return self::getConfig($config);
 
+        }
+
+// especials routes
+        if (preg_match('/^[service|controller\/ajax]+[\/a-z0-9]{0,100}$/i', $endpoint)) {
+            \tasks::Class('\Ajax\requestAjax');
+        }
+
+        if (preg_match('/^[api\/]+[\/a-zA-Z0-9]{0,100}$/', $endpoint)) {
+            \tasks::Class('\Apis\serviceApi');
         }
 
     }

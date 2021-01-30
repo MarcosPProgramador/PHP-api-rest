@@ -140,10 +140,9 @@ var __ = {
         xhr.responseType = dataType;
         xhr.open(method, url, true);
         xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+        if (beforeSend)
+            xhr.onloadstart = beforeSend;
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === 3)
-                if (beforeSend)
-                    beforeSend();
             if (xhr.readyState === 4)
                 success(xhr.response);
         };

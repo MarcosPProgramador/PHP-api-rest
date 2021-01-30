@@ -43,7 +43,9 @@ class signUpModel {
                 $datas['token'],
                 $datas['date'],
             ]);
-            header('Location: logIn');
+            setcookie('email', $datas['email'], time() + 86400, '/');
+            setcookie('logged', true, time() + 86400, '/');
+            header('Location: products');
             exit();
         }
 

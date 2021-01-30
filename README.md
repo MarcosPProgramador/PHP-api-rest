@@ -4,10 +4,10 @@
 
 ### Preview
 
--   desktop
+-   desktop **(1568 x 748)**
 
     ![desktop](./views/public/assets/img/layout-desktop.png)
--   mobile
+-   mobile **(280 x 653)**
 
     ![mobile](./views/public/assets/img/layout-mobile.png)
 
@@ -19,6 +19,8 @@
 -   MVC
 -   PHP
 -   JQuery
+-   Ajax
+-   Api-Rest
 -   mysql
 -   JavaScript
 -   TypeScript

@@ -68,6 +68,8 @@ function _(Elm: string | HTMLElement) {
   }
   type events =
     | 'click'
+    | 'mouseenter'
+    | 'hover'
     | 'change'
     | 'focus'
     | 'keyup'
@@ -142,9 +144,8 @@ const __ = {
 
     xhr.open(method, url, true)
     xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
-
+    if (beforeSend) xhr.onloadstart = beforeSend
     xhr.onreadystatechange = () => {
-      if (xhr.readyState === 3) if (beforeSend) beforeSend()
       if (xhr.readyState === 4) success(xhr.response)
     }
 

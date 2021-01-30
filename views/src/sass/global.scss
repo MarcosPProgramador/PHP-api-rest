@@ -285,7 +285,7 @@ template {
 }
 *::-webkit-scrollbar-thumb {
   border-radius: 50rem;
-  background-color: var(--text);
+  background-color: rgb(198, 68, 238);
 }
 * {
   scrollbar-width: thin;
@@ -298,9 +298,6 @@ main {
   height: 100%;
   min-width: 260px;
   min-height: 100vh;
-}
-main {
-  overflow-y: auto;
 }
 input {
   border-radius: 0.2px;
