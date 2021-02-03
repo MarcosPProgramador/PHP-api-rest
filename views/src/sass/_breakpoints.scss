@@ -31,5 +31,9 @@
     @media screen and (max-width: 1350px) {
       @content;
     }
+  } @else if $point == tablets-3 {
+    @media screen and (max-width: 1400px) {
+      @content;
+    }
   }
 }

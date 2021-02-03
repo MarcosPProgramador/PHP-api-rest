@@ -67,7 +67,6 @@ _('#addmoney').Event('click', function (_a) {
     var target = _a.target;
     var idmoney = target.getAttribute('data-money');
     var money = document.querySelector(idmoney);
-    console.log('carregando...');
     put("/api/usersmoney?value=200", function (json) {
         money.textContent = String(json.datas.value);
     });
@@ -87,7 +86,7 @@ __.ajax({
                 .Child({
                 Index: i,
                 Element: 'div',
-                Class: 'items__around',
+                Class: ['items__around'],
                 Attribute: [{ Key: 'data-target', Value: String(data.id) }],
             })
                 .Child({
@@ -150,11 +149,13 @@ __.ajax({
                 .Child({
                 Element: 'button',
                 Class: ['items__product-animate', 'a4', 'items__product-buy'],
+                Attribute: [{ Key: 'btntoggleinit', Value: '' }],
                 Parent: '.items__product-controls',
             })
                 .Child({
                 Element: 'i',
                 Class: ['fa', 'fa-bookmark'],
+                Attribute: [{ Key: 'style', Value: 'display: none;' }],
                 Parent: '.items__product-buy',
             })
                 .Child({
@@ -165,11 +166,13 @@ __.ajax({
                 .Child({
                 Element: 'button',
                 Class: ['items__product-animate', 'a5', 'items__product-favorite'],
+                Attribute: [{ Key: 'btntoggleinit', Value: '' }],
                 Parent: '.items__product-controls',
             })
                 .Child({
                 Element: 'i',
                 Class: ['fa', 'fa-heart'],
+                Attribute: [{ Key: 'style', Value: 'display: none;' }],
                 Parent: '.items__product-favorite',
             })
                 .Child({
@@ -178,127 +181,126 @@ __.ajax({
                 Parent: '.items__product-favorite',
             });
         });
-        new productsEffects();
-        $('#loadmore').on('click', function () {
-            var items = $('.items__around').length;
-            __.ajax({
-                url: path + "api/products",
-                method: 'post',
-                data: { init: items, end: 10 },
-                dataType: 'json',
-                beforeSend: function () {
-                    _('#loading').css({ display: 'flex' });
-                },
-                success: function (response) {
-                    _('#loading').css({ display: 'none' });
-                    var datas = response.datas;
-                    var items = $('.items__around').length;
-                    datas.map(function (data, i) {
-                        _('#products')
-                            .Child({
-                            Index: i + items,
-                            Element: 'div',
-                            Class: ['items__around', 'items__around--active'],
-                            Attribute: [{ Key: 'data-target', Value: String(data.id) }],
-                        })
-                            .Child({
-                            Element: 'div',
-                            Class: 'items__container-img',
-                            Parent: '.items__around',
-                        })
-                            .Child({
-                            Element: 'div',
-                            Class: 'items__image-size',
-                            Parent: '.items__container-img',
-                        })
-                            .Child({
-                            Element: 'div',
-                            Class: 'items__data-info',
-                            Parent: '.items__around',
-                        })
-                            .Child({
-                            Element: 'div',
-                            Class: 'items__product-datas',
-                            Parent: '.items__data-info',
-                        })
-                            .Child({
-                            Element: 'div',
-                            Class: [
-                                'items__product-animate',
-                                'a1',
-                                'items__product-data',
-                                'items__product-name',
-                            ],
-                            Content: data.product,
-                            Parent: '.items__product-datas',
-                        })
-                            .Child({
-                            Element: 'button',
-                            Class: [
-                                'items__product-animate',
-                                'a2',
-                                'items__product-data',
-                                'items__product-price',
-                            ],
-                            Content: data.price,
-                            Parent: '.items__product-datas',
-                        })
-                            .Child({
-                            Element: 'div',
-                            Class: 'items__product-controls',
-                            Parent: '.items__data-info',
-                        })
-                            .Child({
-                            Element: 'button',
-                            Class: [
-                                'items__product-animate',
-                                'a3',
-                                'items__product-create',
-                            ],
-                            Parent: '.items__product-controls',
-                        })
-                            .Child({
-                            Element: 'i',
-                            Class: ['fa', 'fa-plus'],
-                            Parent: '.items__product-create',
-                        })
-                            .Child({
-                            Element: 'button',
-                            Class: ['items__product-animate', 'a4', 'items__product-buy'],
-                            Parent: '.items__product-controls',
-                        })
-                            .Child({
-                            Element: 'i',
-                            Class: ['fa', 'fa-bookmark'],
-                            Parent: '.items__product-buy',
-                        })
-                            .Child({
-                            Element: 'i',
-                            Class: ['fa', 'fa-bookmark-o'],
-                            Parent: '.items__product-buy',
-                        })
-                            .Child({
-                            Element: 'button',
-                            Class: [
-                                'items__product-animate',
-                                'a5',
-                                'items__product-favorite',
-                            ],
-                            Parent: '.items__product-controls',
-                        })
-                            .Child({
-                            Element: 'i',
-                            Class: ['fa', 'fa-heart'],
-                            Parent: '.items__product-favorite',
-                        })
-                            .Child({
-                            Element: 'i',
-                            Class: ['fa', 'fa-heart-o'],
-                            Parent: '.items__product-favorite',
-                        });
-                    });
-                },
-            });
-        });
+        var classProductsEffetcs = new productsEffects();
+        classProductsEffetcs.buttonToggleProducts('[btntoggleinit]');
     },
+});
+$('#loadmore').on('click', function () {
+    var items = $('.items__around').length;
+    __.ajax({
+        url: path + "api/products",
+        method: 'post',
+        data: { init: items, end: 10 },
+        dataType: 'json',
+        beforeSend: function () {
+            _('#loading').css({ display: 'flex' });
+        },
+        success: function (response) {
+            _('#loading').css({ display: 'none' });
+            var datas = response.datas;
+            var items = $('.items__around').length;
+            datas.map(function (data, i) {
+                _('#products')
+                    .Child({
+                    Index: i + items,
+                    Element: 'div',
+                    Class: ['items__around', 'items__around--active'],
+                    Attribute: [{ Key: 'data-target', Value: String(data.id) }],
+                })
+                    .Child({
+                    Element: 'div',
+                    Class: 'items__container-img',
+                    Parent: '.items__around',
+                })
+                    .Child({
+                    Element: 'div',
+                    Class: 'items__image-size',
+                    Parent: '.items__container-img',
+                })
+                    .Child({
+                    Element: 'div',
+                    Class: 'items__data-info',
+                    Parent: '.items__around',
+                })
+                    .Child({
+                    Element: 'div',
+                    Class: 'items__product-datas',
+                    Parent: '.items__data-info',
+                })
+                    .Child({
+                    Element: 'div',
+                    Class: [
+                        'items__product-animate',
+                        'a1',
+                        'items__product-data',
+                        'items__product-name',
+                    ],
+                    Content: data.product,
+                    Parent: '.items__product-datas',
+                })
+                    .Child({
+                    Element: 'button',
+                    Class: [
+                        'items__product-animate',
+                        'a2',
+                        'items__product-data',
+                        'items__product-price',
+                    ],
+                    Content: data.price,
+                    Parent: '.items__product-datas',
+                })
+                    .Child({
+                    Element: 'div',
+                    Class: 'items__product-controls',
+                    Parent: '.items__data-info',
+                })
+                    .Child({
+                    Element: 'button',
+                    Class: ['items__product-animate', 'a3', 'items__product-create'],
+                    Attribute: [{ Key: 'btnopen', Value: '' }],
+                    Parent: '.items__product-controls',
+                })
+                    .Child({
+                    Element: 'i',
+                    Class: ['fa', 'fa-plus'],
+                    Parent: '.items__product-create',
+                })
+                    .Child({
+                    Element: 'button',
+                    Class: ['items__product-animate', 'a4', 'items__product-buy'],
+                    Attribute: [{ Key: 'btntoggle', Value: '' }],
+                    Parent: '.items__product-controls',
+                })
+                    .Child({
+                    Element: 'i',
+                    Class: ['fa', 'fa-bookmark'],
+                    Attribute: [{ Key: 'style', Value: 'display: none;' }],
+                    Parent: '.items__product-buy',
+                })
+                    .Child({
+                    Element: 'i',
+                    Class: ['fa', 'fa-bookmark-o'],
+                    Parent: '.items__product-buy',
+                })
+                    .Child({
+                    Element: 'button',
+                    Class: ['items__product-animate', 'a5', 'items__product-favorite'],
+                    Attribute: [{ Key: 'btntoggle', Value: '' }],
+                    Parent: '.items__product-controls',
+                })
+                    .Child({
+                    Element: 'i',
+                    Class: ['fa', 'fa-heart'],
+                    Attribute: [{ Key: 'style', Value: 'display: none;' }],
+                    Parent: '.items__product-favorite',
+                })
+                    .Child({
+                    Element: 'i',
+                    Class: ['fa', 'fa-heart-o'],
+                    Parent: '.items__product-favorite',
+                });
+            });
+            new productsEffectsEnd();
+        },
+    });
 });
