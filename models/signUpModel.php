@@ -8,7 +8,7 @@ class signUpModel {
             'lastname'  => $_GET['lastname'],
             'email'     => $_GET['email'],
             'password'  => $_GET['password'],
-            'token'     => uniqid(),
+            'token'     => $_COOKIE['token'],
             'date'      => date('Y-m-d H:i:s'),
         ];
 
