@@ -116,9 +116,13 @@ class controller {
                     'icon'   => 'welcome.png',
                     'style'  => ['products.min.css'],
                     'script' => [
-                      'products.js',
-                      'productsEffects.js'
+                        'products.js',
+                        'productsEffects.js',
+                        'productsCreated.js',
+                        'productsPurchased.js',
+                        'productsFavorites.js',
                     ],
+                    'php'    => ['\Controllers\userproductController'],
                     'up'     => 'headerProducts.php',
                     'middle' => 'products.php',
                     'low'    => 'footerProducts.php',
