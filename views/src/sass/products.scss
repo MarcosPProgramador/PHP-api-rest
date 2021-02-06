@@ -6,6 +6,8 @@
   --shadow: rgb(26, 28, 34);
   --button-act: #8d99ae;
   --pink: rgb(248, 43, 163);
+  --rgba-05: rgba(0, 0, 0, 0.5);
+  --rgba-02: rgba(0, 0, 0, 0.2);
 }
 *::-webkit-scrollbar {
   background-color: #222;
@@ -134,7 +136,6 @@ button {
     width: 100px;
     background-color: var(--secondary);
     @include breakpoint(tablets-3) {
-      
       height: unset;
       width: 100%;
       min-width: 260px;
@@ -310,13 +311,95 @@ button {
       }
       .gallery__products {
         padding-bottom: 50px;
+        .register-product {
+          z-index: 10;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+
+          .register-product__cover {
+            height: 100%;
+            width: 100%;
+            background-color: var(--rgba-05);
+            backdrop-filter: blur(20px);
+
+            .register-product__container {
+              max-width: 500px;
+              margin: 0 auto;
+              padding: 0 3%;
+              .register-product__align {
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .register-product__box {
+                  height: 300px;
+                  position: relative;
+                  .register-product-button--close {
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                  }
+                  border-radius: 10px;
+                  width: 100%;
+                  padding: 50px 20px;
+                  background-color: var(--secondary);
+                  border: 1px solid var(--green);
+                  .register-product__groups {
+                    .register-product__title {
+                      h2 {
+                        font-weight: lighter;
+                        font-size: 18px;
+                        margin-bottom: 50px;
+                      }
+                    }
+                    &.register-product__groups-top {
+                      display: flex;
+                      flex-wrap: wrap;
+                      .register-product__group {
+                        &:nth-child(-n + 1) {
+                          select {
+                            margin-right: 10px;
+                          }
+                        }
+                        select {
+                          margin-bottom: 10px;
+                          padding: 3px 20px;
+                          border-radius: 5px;
+
+                          background-color: var(--primary);
+                        }
+                      }
+                    }
+                    &.register-product__groups-bottom {
+                      margin-top: 20px;
+                      .register-product__group {
+                        label {
+                          font-size: 12px;
+                          margin-right: 10px;
+                        }
+                        input {
+                          color: var(--text-ternary);
+                          padding: 5px 15px;
+                          border-radius: 3px;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
         .loading {
           top: 0;
           left: 0;
           right: 0;
           bottom: 0;
           backdrop-filter: blur(10px);
-          background-color: rgba(0, 0, 0, 0.5);
+          background-color: var(--rgba-05);
           position: fixed;
           z-index: 5;
           user-select: none;
@@ -330,7 +413,7 @@ button {
             display: flex;
             flex-wrap: wrap;
             position: relative;
-            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10px 0 var(--rgba-05);
             animation: loading-animate 200ms ease-in-out infinite;
             @keyframes loading-animate {
               from {
@@ -343,7 +426,7 @@ button {
             span {
               width: 20px;
               height: 20px;
-              border: 2px solid #000;
+              border: 2px solid var(--black);
               display: block;
               position: absolute;
               border-radius: 5px;
@@ -383,7 +466,7 @@ button {
           .items__around {
             margin: 5px;
             position: relative;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: var(--rgba-05);
             border-radius: 5px;
             width: 100%;
             max-width: 200px;
@@ -392,6 +475,39 @@ button {
             &.items__around--active {
               .items__image-size {
                 transform: translateY(0) !important;
+                .alert {
+                  background-color: var(--rgba-05);
+                  height: 100%;
+                  width: 100%;
+                  display: grid;
+                  align-items: center;
+                  .alert__container {
+                    padding: 0 4%;
+                    .alert__container-top {
+                      h2.alert__title {
+                        font-size: 15px;
+                      }
+                    }
+                    .alert__container-bottom {
+                      margin-top: 20px;
+
+                      .alert__button {
+                        border-radius: 3px;
+                        padding: 5px 10px;
+
+                        &.alert__button-01 {
+                          background-color: var(--red);
+                        }
+                        &.alert__button-02 {
+                          margin-left: 5px;
+
+                          color: var(--text-ternary);
+                          background-color: var(--white);
+                        }
+                      }
+                    }
+                  }
+                }
               }
               .items__product-animate {
                 transform: translateY(0) !important;
@@ -425,7 +541,7 @@ button {
                 transition: transform 500ms ease-in-out 200ms;
                 transform: translateY(44px);
                 border-radius: 5px;
-                background-color: rgba(0, 0, 0, 0.2);
+                background-color: var(--rgba-02);
                 height: 300px;
                 img {
                   width: 100%;
