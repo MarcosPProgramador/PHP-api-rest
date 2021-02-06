@@ -1,12 +1,20 @@
 <?php
 namespace Services;
 class productsService {
+    public function __construct() {
+        $this->classUserProductModel = \tasks::Class('\Models\userproductModel');
+    }
 
     public function get() {
-        $connect = \tasks::ConnectDB();
-        $query = $connect->prepare('SELECT * FROM `tb_site.products` LIMIT 10');
-        $query->execute();
-        $datas = $query->fetchAll(\PDO::FETCH_ASSOC);
+        $queryProducts = 'SELECT
+                            *
+                          FROM
+                            `tb_site.products`
+                              LIMIT
+                                10
+        ';
+
+        $datas = $this->classUserProductModel->selectAll($queryProducts, null);
 
         return $datas;
     }
@@ -15,10 +23,16 @@ class productsService {
         $init = intval($_POST['init']);
         $end = intval($_POST['end']);
 
-        $connect = \tasks::ConnectDB();
-        $query = $connect->prepare("SELECT * FROM `tb_site.products` LIMIT $init, $end");
-        $query->execute();
-        $datas = $query->fetchAll(\PDO::FETCH_ASSOC);
+        $queryProducts = "SELECT
+                            *
+                          FROM
+                          `tb_site.products`
+                            LIMIT
+                              $init,
+                              $end
+        ";
+
+        $datas = $this->classUserProductModel->selectAll($queryProducts, null);
 
         return $datas;
     }
