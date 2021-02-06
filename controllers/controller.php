@@ -117,12 +117,11 @@ class controller {
                     'style'  => ['products.min.css'],
                     'script' => [
                         'products.js',
-                        'productsEffects.js',
                         'productsCreated.js',
                         'productsPurchased.js',
                         'productsFavorites.js',
+                        'productsEffects.js',
                     ],
-                    'php'    => ['\Controllers\userproductController'],
                     'up'     => 'headerProducts.php',
                     'middle' => 'products.php',
                     'low'    => 'footerProducts.php',
