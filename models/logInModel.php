@@ -43,7 +43,7 @@ class logInModel {
                     'success' => false,
                 ];
             }
-
+            setcookie('email', $value, time() + 86400, '/');
             return [
                 'message' => 'Validado!',
                 'success' => true,

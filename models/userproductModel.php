@@ -1,15 +1,33 @@
 <?php
 namespace Models;
 class userproductModel {
-    public function userCreatedProduct(\PDO $connect) {
 
+    public function __construct() {
+        $this->connect = \tasks::ConnectDB();
     }
 
-    public function userPurchasedProduct(\PDO $connect) {
+    public function query($query, $executeArr) {
 
+        $query = $this->connect->prepare($query);
+        $query->execute($executeArr);
     }
 
-    public function userFavoritesProduct(\PDO $connect) {
+    public function select($query, $executeArr) {
 
+        $querySelect = $this->connect->prepare($query);
+        $querySelect->execute($executeArr);
+        $datas = $querySelect->fetch(\PDO::FETCH_ASSOC);
+
+        return $datas;
     }
+
+    public function selectAll($query, $executeArr) {
+
+        $querySelect = $this->connect->prepare($query);
+        $querySelect->execute($executeArr);
+        $datas = $querySelect->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $datas;
+    }
+
 }
