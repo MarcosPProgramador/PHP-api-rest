@@ -14,11 +14,6 @@ class productfavoritesService {
                                     `tb_site.user.favoritesproduct`
                                   WHERE
                                     token = ?
-                                      GROUP BY
-                                        name
-                                      ORDER BY
-                                        id
-                                      ASC
         ';
         $executeFavoritesProduct = [$_COOKIE['token']];
 
@@ -46,10 +41,12 @@ class productfavoritesService {
                                             name,
                                             token,
                                             email,
+                                            product_id,
                                             price
                                           )
                                         VALUES
                                           (
+                                            ?,
                                             ?,
                                             ?,
                                             ?,
@@ -61,6 +58,7 @@ class productfavoritesService {
             $datas['product'],
             $_COOKIE['token'],
             $_COOKIE['email'],
+            intval($_POST['id']),
             $datas['price'],
         ];
 
@@ -77,13 +75,33 @@ class productfavoritesService {
             parse_str(file_get_contents('php://input'), $_DELETE);
         }
 
+        if (isset($_DELETE['id'])) {
+            $queryFavoritesProductDelete = 'DELETE
+                                            FROM
+                                              `tb_site.user.favoritesproduct`
+                                          WHERE
+                                            token = ?
+                                          AND
+                                            id = ?
+          ';
+            $executeFavoritesProductDelete = [
+                $_COOKIE['token'],
+                $_DELETE['id'],
+            ];
+            $this->classUserProductModel->query($queryFavoritesProductDelete, $executeFavoritesProductDelete);
+
+            return [
+                'Deleted' => $_DELETE['id'],
+            ];
+        }
+
         $queryFavoritesProductDelete = 'DELETE
                                           FROM
                                             `tb_site.user.favoritesproduct`
                                         WHERE
                                           token = ?
                                         AND
-                                          id = ?
+                                          product_id = ?
         ';
 
         $executeFavoritesProductDelete = [
@@ -94,7 +112,7 @@ class productfavoritesService {
         $this->classUserProductModel->query($queryFavoritesProductDelete, $executeFavoritesProductDelete);
 
         return [
-            'DeletedId' => $_DELETE['productId'],
+            'Deleted' => $_DELETE['productId'],
         ];
     }
 

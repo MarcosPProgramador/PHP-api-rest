@@ -11,7 +11,7 @@ class productcreatedService {
     }
     public function post()
     {
-      $connect = \tasks::ConnectDB();
+        $connect = \tasks::ConnectDB();
         $querySelect = $connect->prepare('SELECT product, price FROM `tb_site.products` WHERE id = ?');
         $querySelect->execute([$_POST['id']]);
         $datas = $querySelect->fetch(\PDO::FETCH_ASSOC);

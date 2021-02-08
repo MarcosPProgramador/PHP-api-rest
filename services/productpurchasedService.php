@@ -48,7 +48,6 @@ class productpurchasedService {
 
         $datas = $this->classUserProductModel->select($queryProductsSelect, $executeArrProductsSelect);
         $datasMoney = $this->classUserProductModel->select($queryUsersSelect, $executeArrUsersSelect);
-
         try {
             $value = $datasMoney['money'] - $datas['price'];
 
