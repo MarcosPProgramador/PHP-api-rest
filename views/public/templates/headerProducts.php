@@ -33,7 +33,7 @@
                   </div>
                   <div class="addmoney__datacart">
                     <div class="addmoney__cart" title="Criar um produto">
-                      <button class="addmoney__cartbutton" btnopen data-target="create">
+                      <button class="addmoney__cartbutton items__product-button-0">
                         <span>
                           <i class="fa fa-plus" aria-hidden="true"></i>
                         </span>

@@ -5,7 +5,14 @@ var productsEffects = /** @class */ (function () {
         this.showSidebar();
         this.hideSidebar();
         this.showForm();
+        this.buttonGetItems();
     }
+    productsEffects.prototype.buttonGetItems = function () {
+        var buttonGetFavorite = document.getElementById('button-get-favorite');
+        buttonGetFavorite === null || buttonGetFavorite === void 0 ? void 0 : buttonGetFavorite.addEventListener('click', function () {
+            getElementsFavoritesProducts();
+        });
+    };
     productsEffects.prototype.showForm = function () {
         $('.items__product-button-0').each(function (i, productButton) {
             $(productButton).on('click', function () {
@@ -75,13 +82,19 @@ var productsEffects = /** @class */ (function () {
                             dataType: 'json',
                             data: { id: productId },
                             url: path + "api/productfavorites/",
-                            success: function (response) {
-                                getElementsFavoritesProducts();
-                            },
+                            success: function (response) { },
                         });
                     }
                 }
                 else {
+                    __.ajax({
+                        method: 'DELETE',
+                        dataType: 'json',
+                        data: { productId: productId },
+                        url: path + "api/productfavorites/",
+                        success: function (response) {
+                        },
+                    });
                     icon_2.removeAttribute('style');
                     _(icon_1).css({ display: 'none' });
                 }

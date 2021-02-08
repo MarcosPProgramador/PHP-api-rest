@@ -18,7 +18,7 @@
         </div>
 
         <div class="gallery__sidebar-box">
-          <button class="gallery__sidebar-button" btnopen data-target="favorite">
+          <button class="gallery__sidebar-button" id="button-get-favorite" btnopen data-target="favorite">
             <i class="fa fa-heart" aria-hidden="true"></i>
             <span>Favorites</span>
           </button>
@@ -115,6 +115,12 @@
         </div>
         <div class="gallery__products">
           <div class="items" id="products"></div>
+          <div class="register-message">
+              <div id="created-product-animate" class="register-message__box">
+                <span>Created Product</span>
+              </div>
+
+          </div>
           <div class="register-product" id="register-product" style="display: none;">
             <div class="register-product__cover register-product--close">
               <div class="register-product__container">
@@ -132,20 +138,10 @@
                       </div>
                       <div class="register-product__groups register-product__groups-top">
                         <div class="register-product__group">
-                          <select name="" id="product-select">
-                              <option value="1" selected>Celular</option>
-                              <option value="2">Geladeira</option>
-                              <option value="3" >Fogão</option>
-                              <option value="4" >Garrafa</option>
-                          </select>
+                          <select id="product-select"></select>
                         </div>
                         <div class="register-product__group">
-                          <select name="" id="product-select-brand">
-                              <option value="Galaxy X7" selected>Galaxy X7</option>
-                              <option value="Galaxy">Galaxy</option>
-                              <option value="Galaxy S10">Galaxy S10</option>
-                              <option value="Galaxy X9" >X9</option>
-                          </select>
+                          <select id="product-select-brand"></select>
                         </div>
 
                       </div>
@@ -153,6 +149,9 @@
                       <div class="register-product__group">
                         <label for="price">Price</label>
                         <input id="price" type="text">
+                      </div>
+                      <div class="register-product__group">
+                        <button type="button" class="register-product__group-button register-product--close" id="register-product-button-send">Enviar</button>
                       </div>
                     </div>
                     </form>

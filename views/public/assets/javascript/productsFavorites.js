@@ -1,11 +1,11 @@
 "use strict";
 var productFavorites = path + "api/productfavorites/";
 function getElementsFavoritesProducts() {
-    var sidebarProductItems = document.querySelectorAll('.gallery__sidebar-product-item');
-    sidebarProductItems.forEach(function (sidebarProductItem) {
-        sidebarProductItem.remove();
-    });
     getContext(productFavorites, function (products) {
+        var sidebarProductItems = document.querySelectorAll('.gallery__sidebar-product-item');
+        sidebarProductItems.forEach(function (sidebarProductItem) {
+            sidebarProductItem.remove();
+        });
         products.map(function (product, i) {
             _('#favorites-items')
                 .Child({
@@ -58,7 +58,7 @@ function getElementsFavoritesProducts() {
                     url: path + "api/productfavorites/",
                     method: 'DELETE',
                     dataType: 'json',
-                    data: { productId: productId },
+                    data: { id: productId },
                     success: function (response) {
                         var sidebarProductItems = document.querySelectorAll('.gallery__sidebar-product-item');
                         sidebarProductItems.forEach(function (sidebarProductItem) {
@@ -73,4 +73,3 @@ function getElementsFavoritesProducts() {
         });
     });
 }
-getElementsFavoritesProducts();

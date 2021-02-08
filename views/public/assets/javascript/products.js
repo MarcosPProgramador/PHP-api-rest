@@ -37,9 +37,17 @@ function eventsRequest() {
             data: { value: 200 },
             url: path + "api/usersmoney/",
             success: function (response) {
-                var _a = String(response.datas.value).split('.'), n = _a[0], nn = _a[1];
-                var txt = n + "." + nn.slice(0, 2);
-                money.textContent = txt;
+                var value = String(response.datas.value).split('.');
+                if (value[1]) {
+                    var n = value[0], nn = value[1];
+                    var txt = n + "." + nn.slice(0, 2);
+                    money.textContent = txt;
+                }
+                else {
+                    var n = value[0];
+                    var txt = "" + n;
+                    money.textContent = txt;
+                }
             },
         });
     });
@@ -200,6 +208,7 @@ function ListProducts(datas, items) {
         });
     });
     Alerts();
+    CreateProduct();
     var classProductsEffects = new productsEffects();
     if (items) {
         classProductsEffects.buttonToggleProducts('[btntoggleinit]');
@@ -276,10 +285,17 @@ function Alerts() {
                         url: path + "api/productpurchased",
                         success: function (response) {
                             var money = document.getElementById('money');
-                            if (response.datas.price) {
-                                var _a = String(response.datas.price).split('.'), n = _a[0], nn = _a[1];
-                                var txt = n + "." + nn.slice(0, 2);
-                                money.textContent = txt;
+                            if (response) {
+                                var price_1 = String(response.datas.price).split('.');
+                                if (price_1[1]) {
+                                    var n = price_1[0], nn = price_1[1];
+                                    var txt = n + "." + nn.slice(0, 2);
+                                    money.textContent = txt;
+                                }
+                                else {
+                                    var txt = "" + response.datas.price;
+                                    money.textContent = txt;
+                                }
                             }
                         },
                     });
@@ -292,5 +308,89 @@ function Alerts() {
                 });
             });
         });
+    });
+}
+function CreateProduct() {
+    getContext(path + "api/productname", function (productsname) {
+        var productSelectOptions = document.querySelectorAll('.product-select__option');
+        productSelectOptions.forEach(function (productSelectOption) {
+            productSelectOption.remove();
+        });
+        productsname.map(function (productname, i) {
+            _('#product-select').Child({
+                Index: i,
+                Element: 'option',
+                Attribute: [{ Key: 'value', Value: productname.brand_id }],
+                Class: 'product-select__option',
+                Content: productname.product,
+            });
+        });
+        var productSelect = (document.getElementById('product-select'));
+        requestProductbrand(productSelect.value);
+        function requestProductbrand(brandId) {
+            __.ajax({
+                method: 'post',
+                url: path + "api/productbrand",
+                dataType: 'json',
+                data: { brand_id: brandId },
+                success: function (response) {
+                    var productsBrand = response.datas;
+                    var productSelectBrandOptions = document.querySelectorAll('.product-select-brand__option');
+                    productSelectBrandOptions.forEach(function (productSelectBrandOption) {
+                        productSelectBrandOption.remove();
+                    });
+                    productsBrand.map(function (productBrand, i) {
+                        _('#product-select-brand').Child({
+                            Element: 'option',
+                            Class: 'product-select-brand__option',
+                            Attribute: [{ Key: 'value', Value: String(productBrand.id) }],
+                            Content: productBrand.brand,
+                        });
+                    });
+                },
+            });
+        }
+        productSelect.addEventListener('change', function () {
+            requestProductbrand(productSelect.value);
+        });
+        requestInsertProduct();
+        function requestInsertProduct() {
+            var registerProductButtonSend = document.getElementById('register-product-button-send');
+            registerProductButtonSend === null || registerProductButtonSend === void 0 ? void 0 : registerProductButtonSend.addEventListener('click', function () {
+                var productSelect = document.getElementById('product-select').value;
+                var productSelectBrand = document.getElementById('product-select-brand').value;
+                var productPrice = document.getElementById('price').value;
+                if (productPrice && !isNaN(Number(productPrice))) {
+                    __.ajax({
+                        method: 'post',
+                        url: path + "api/products",
+                        dataType: 'json',
+                        data: {
+                            insert: true,
+                            productName: productSelect,
+                            productBrand: productSelectBrand,
+                            productPrice: productPrice,
+                        },
+                        success: function (response) {
+                            var createdProductAnimate = document.getElementById('created-product-animate');
+                            createdProductAnimate === null || createdProductAnimate === void 0 ? void 0 : createdProductAnimate.classList.add('register-message__box--active');
+                            setTimeout(function () {
+                                createdProductAnimate === null || createdProductAnimate === void 0 ? void 0 : createdProductAnimate.classList.remove('register-message__box--active');
+                            }, 5000);
+                            __.ajax({
+                                method: 'post',
+                                url: path + "api/productcreated",
+                                dataType: 'json',
+                                data: {},
+                                success: function (response) {
+                                },
+                            });
+                        },
+                    });
+                    requestInsertCreatedProduct();
+                }
+                function requestInsertCreatedProduct() { }
+            });
+        }
     });
 }
