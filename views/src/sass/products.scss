@@ -311,6 +311,38 @@ button {
       }
       .gallery__products {
         padding-bottom: 50px;
+        .register-message {
+          .register-message__box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9;
+            border: 1px solid var(--green);
+            padding: 20px 50px;
+            border-radius: 10px;
+            background-color: var(--ternary);
+            display: none;
+            span {
+              color: var(--green);
+            }
+            &.register-message__box--active {
+              display: block !important;
+              animation: animate-register-message 5000ms ease-in-out forwards;
+              @keyframes animate-register-message {
+                0% {
+                  opacity: 0;
+                }
+                30% {
+                  opacity: 1;
+                }
+                100% {
+                  opacity: 0;
+                }
+              }
+            }
+          }
+        }
         .register-product {
           z-index: 10;
           position: fixed;
@@ -348,6 +380,12 @@ button {
                   background-color: var(--secondary);
                   border: 1px solid var(--green);
                   .register-product__groups {
+                    .register-product__group {
+                      button.register-product__group-button {
+                        margin-top: 20px;
+                        color: var(--green);
+                      }
+                    }
                     .register-product__title {
                       h2 {
                         font-weight: lighter;

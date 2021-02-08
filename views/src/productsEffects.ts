@@ -4,6 +4,13 @@ class productsEffects {
     this.showSidebar()
     this.hideSidebar()
     this.showForm()
+    this.buttonGetItems()
+  }
+  private buttonGetItems() {
+    const buttonGetFavorite = document.getElementById('button-get-favorite')
+    buttonGetFavorite?.addEventListener('click', () => {
+      getElementsFavoritesProducts()
+    })
   }
   private showForm() {
     $('.items__product-button-0').each((i, productButton) => {
@@ -82,12 +89,18 @@ class productsEffects {
               dataType: 'json',
               data: { id: productId },
               url: `${path}api/productfavorites/`,
-              success: (response) => {
-                getElementsFavoritesProducts()
-              },
+              success: (response) => {},
             })
           }
         } else {
+          __.ajax({
+            method: 'DELETE',
+            dataType: 'json',
+            data: { productId: productId },
+            url: `${path}api/productfavorites/`,
+            success: (response) => {
+            },
+          })
           icon_2.removeAttribute('style')
           _(icon_1).css({ display: 'none' })
         }

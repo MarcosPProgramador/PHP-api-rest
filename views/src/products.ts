@@ -1,3 +1,7 @@
+interface productName {
+  product: string
+  brand_id: string
+}
 interface usersMoney {
   status: string
   datas: { value: string }
@@ -7,11 +11,15 @@ interface datasJson {
   product: string
   price: string
 }
+interface datasJsonProductBrand {
+  id: number
+  brand: string
+  product_id: string
+}
 interface ResponseJson<T> {
   status: string
   datas: [T]
 }
-
 
 ListFirstRequest()
 function ListFirstRequest() {
@@ -51,10 +59,20 @@ function eventsRequest() {
       data: { value: 200 },
       url: `${path}api/usersmoney/`,
       success: (response) => {
-        const [n, nn] = String(response.datas.value).split('.')
-        const txt = `${n}.${nn.slice(0, 2)}`
+        const value = String(response.datas.value).split('.')
+        if (value[1]) {
+          const [n, nn] = value
 
-        money.textContent = txt
+          const txt = `${n}.${nn.slice(0, 2)}`
+
+          money.textContent = txt
+        } else {
+          const [n] = value
+
+          const txt = `${n}`
+
+          money.textContent = txt
+        }
       },
     })
   })
@@ -222,6 +240,7 @@ function ListProducts(datas: [datasJson], items?: number) {
       })
   })
   Alerts()
+  CreateProduct()
   const classProductsEffects = new productsEffects()
   if (items) {
     classProductsEffects.buttonToggleProducts('[btntoggleinit]')
@@ -303,11 +322,19 @@ function Alerts() {
             url: `${path}api/productpurchased`,
             success: (response) => {
               const money = <HTMLElement>document.getElementById('money')
-              if (response.datas.price) {
-                const [n, nn] = String(response.datas.price).split('.')
-                const txt = `${n}.${nn.slice(0, 2)}`
+              if (response) {
+                const price = String(response.datas.price).split('.')
+                if (price[1]) {
+                  const [n, nn] = price
 
-                money.textContent = txt
+                  const txt = `${n}.${nn.slice(0, 2)}`
+
+                  money.textContent = txt
+                } else {
+                  const txt = `${response.datas.price}`
+
+                  money.textContent = txt
+                }
               }
             },
           })
@@ -320,5 +347,113 @@ function Alerts() {
         })
       })
     })
+  })
+}
+
+function CreateProduct() {
+  getContext<productName>(`${path}api/productname`, (productsname) => {
+    const productSelectOptions = document.querySelectorAll(
+      '.product-select__option'
+    )
+    productSelectOptions.forEach((productSelectOption) => {
+      productSelectOption.remove()
+    })
+    productsname.map((productname, i) => {
+      _('#product-select').Child({
+        Index: i,
+        Element: 'option',
+        Attribute: [{ Key: 'value', Value: productname.brand_id }],
+        Class: 'product-select__option',
+        Content: productname.product,
+      })
+    })
+    const productSelect = <HTMLSelectElement>(
+      document.getElementById('product-select')
+    )
+    requestProductbrand(productSelect.value)
+    function requestProductbrand(brandId: string) {
+      __.ajax({
+        method: 'post',
+        url: `${path}api/productbrand`,
+        dataType: 'json',
+        data: { brand_id: brandId },
+        success: (response: ResponseJson<datasJsonProductBrand>) => {
+          const productsBrand = response.datas
+          const productSelectBrandOptions = document.querySelectorAll(
+            '.product-select-brand__option'
+          )
+
+          productSelectBrandOptions.forEach((productSelectBrandOption) => {
+            productSelectBrandOption.remove()
+          })
+          productsBrand.map((productBrand, i) => {
+            _('#product-select-brand').Child({
+              Element: 'option',
+              Class: 'product-select-brand__option',
+              Attribute: [{ Key: 'value', Value: String(productBrand.id) }],
+              Content: productBrand.brand,
+            })
+          })
+        },
+      })
+    }
+    productSelect.addEventListener('change', () => {
+      requestProductbrand(productSelect.value)
+    })
+    requestInsertProduct()
+    function requestInsertProduct() {
+      const registerProductButtonSend = document.getElementById(
+        'register-product-button-send'
+      )
+      registerProductButtonSend?.addEventListener('click', () => {
+        const productSelect = (document.getElementById(
+          'product-select'
+        ) as HTMLSelectElement).value
+        const productSelectBrand = (document.getElementById(
+          'product-select-brand'
+        ) as HTMLSelectElement).value
+        const productPrice = (document.getElementById(
+          'price'
+        ) as HTMLSelectElement).value
+
+        if (productPrice && !isNaN(Number(productPrice))) {
+          __.ajax({
+            method: 'post',
+            url: `${path}api/products`,
+            dataType: 'json',
+            data: {
+              insert: true,
+              productName: productSelect,
+              productBrand: productSelectBrand,
+              productPrice: productPrice,
+            },
+            success: (response: ResponseJson<datasJsonProductBrand>) => {
+              const createdProductAnimate = document.getElementById(
+                'created-product-animate'
+              )
+              createdProductAnimate?.classList.add(
+                'register-message__box--active'
+              )
+              setTimeout(() => {
+                createdProductAnimate?.classList.remove(
+                  'register-message__box--active'
+                )
+              }, 5000)
+
+              __.ajax({
+                method: 'post',
+                url: `${path}api/productcreated`,
+                dataType: 'json',
+                data: {},
+                success: (response: ResponseJson<datasJson>) => {
+                },
+              })
+            },
+          })
+          requestInsertCreatedProduct()
+        }
+        function requestInsertCreatedProduct() {}
+      })
+    }
   })
 }

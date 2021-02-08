@@ -5,13 +5,14 @@ interface productsFavorites {
 }
 const productFavorites = `${path}api/productfavorites/`
 function getElementsFavoritesProducts() {
-  const sidebarProductItems = document.querySelectorAll(
-    '.gallery__sidebar-product-item'
-  )
-  sidebarProductItems.forEach((sidebarProductItem) => {
-    sidebarProductItem.remove()
-  })
   getContext<productsFavorites>(productFavorites, (products) => {
+    const sidebarProductItems = document.querySelectorAll(
+      '.gallery__sidebar-product-item'
+    )
+
+    sidebarProductItems.forEach((sidebarProductItem) => {
+      sidebarProductItem.remove()
+    })
     products.map((product, i) => {
       _('#favorites-items')
         .Child({
@@ -66,7 +67,7 @@ function getElementsFavoritesProducts() {
           url: `${path}api/productfavorites/`,
           method: 'DELETE',
           dataType: 'json',
-          data: { productId: productId },
+          data: { id: productId },
           success: (response) => {
             const sidebarProductItems = document.querySelectorAll(
               '.gallery__sidebar-product-item'
@@ -85,4 +86,3 @@ function getElementsFavoritesProducts() {
     })
   })
 }
-getElementsFavoritesProducts()
