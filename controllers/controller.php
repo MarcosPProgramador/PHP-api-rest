@@ -111,6 +111,7 @@ class controller {
         case '/products':
 
             if (isset($_COOKIE['logged'])) {
+
                 $config = [
                     'title'  => 'Bem-vindo(a)!',
                     'icon'   => 'welcome.png',
@@ -121,6 +122,7 @@ class controller {
                         'productsPurchased.js',
                         'productsFavorites.js',
                         'productsEffects.js',
+                        'userUpdate.js',
                     ],
                     'up'     => 'headerProducts.php',
                     'middle' => 'products.php',
@@ -176,7 +178,9 @@ class controller {
                         'usersOnline.js',
                         'usersToday.js',
                         'usersVisited.js',
+
                     ],
+                    'php'    => ['\Controllers\adminCheckUserController'],
                     'up'     => 'headerAdmin.php',
                     'middle' => 'admin.php',
                     'low'    => 'footerAdmin.php',

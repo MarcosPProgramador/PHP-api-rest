@@ -29,6 +29,7 @@ class productfavoritesService {
                                     `tb_site.products`
                                   WHERE
                                     id = ?
+                                    
         ';
 
         $executeFavoritesProduct = [$_POST['id']];

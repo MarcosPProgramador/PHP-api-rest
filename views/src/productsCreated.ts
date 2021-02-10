@@ -6,8 +6,14 @@ interface productsCreated {
 const productCreated =
   'http://localhost/projetos/linguagens/PHP_api-rest/api/productcreated/'
 function getElementsCreatedProducts() {
+  console.log('products')
   getContext<productsCreated>(productCreated, (products) => {
-
+    const items = document.querySelectorAll(
+      ' #created-items .gallery__sidebar-product-item'
+    )
+    items.forEach((item) => {
+      item.remove()
+    })
     products.map((product, i) => {
       _('#created-items')
         .Child({
@@ -81,4 +87,7 @@ function getElementsCreatedProducts() {
     })
   })
 }
-getElementsCreatedProducts()
+const buttonGetCreated = document.getElementById('button-get-created')
+buttonGetCreated?.addEventListener('click', () => {
+  getElementsCreatedProducts()
+})

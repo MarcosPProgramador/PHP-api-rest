@@ -27,16 +27,23 @@ class tasks {
             $connect = self::ConnectDB();
             try {
                 $queryUser = $connect->prepare('UPDATE `tb_site.users` SET token = ? WHERE email = ?');
-
                 $queryCreatedProduct = $connect->prepare('UPDATE `tb_site.user.createdproduct` SET token = ? WHERE email = ?');
                 $queryPurchasedProduct = $connect->prepare('UPDATE `tb_site.user.purchasedproduct` SET token = ? WHERE email = ?');
                 $queryFavoritesProduct = $connect->prepare('UPDATE `tb_site.user.favoritesproduct` SET token = ? WHERE email = ?');
+                $queryUsersOnline = $connect->prepare('UPDATE `tb_admin.usersonline` SET token = ? WHERE email = ?');
+                $queryUsersToday = $connect->prepare('UPDATE `tb_admin.userstoday` SET token = ? WHERE email = ?');
+                $queryUsersVisited = $connect->prepare('UPDATE `tb_admin.usersvisited` SET token = ? WHERE email = ?');
 
-                $queryCreatedProduct->execute([$token, $_COOKIE['email']]);
-                $queryPurchasedProduct->execute([$token, $_COOKIE['email']]);
-                $queryFavoritesProduct->execute([$token, $_COOKIE['email']]);
+                $executeArr = [$token, $_COOKIE['email']];
 
-                $queryUser->execute([$token, $_COOKIE['email']]);
+                $queryCreatedProduct->execute($executeArr);
+                $queryPurchasedProduct->execute($executeArr);
+                $queryFavoritesProduct->execute($executeArr);
+                $queryUsersOnline->execute($executeArr);
+                $queryUsersToday->execute($executeArr);
+                $queryUsersVisited->execute($executeArr);
+                $queryUser->execute($executeArr);
+                
             } catch (\Throwable $th) {
                 die('Bad request');
             }

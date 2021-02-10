@@ -1,7 +1,12 @@
 "use strict";
 var productCreated = 'http://localhost/projetos/linguagens/PHP_api-rest/api/productcreated/';
 function getElementsCreatedProducts() {
+    console.log('products');
     getContext(productCreated, function (products) {
+        var items = document.querySelectorAll(' #created-items .gallery__sidebar-product-item');
+        items.forEach(function (item) {
+            item.remove();
+        });
         products.map(function (product, i) {
             _('#created-items')
                 .Child({
@@ -69,4 +74,7 @@ function getElementsCreatedProducts() {
         });
     });
 }
-getElementsCreatedProducts();
+var buttonGetCreated = document.getElementById('button-get-created');
+buttonGetCreated === null || buttonGetCreated === void 0 ? void 0 : buttonGetCreated.addEventListener('click', function () {
+    getElementsCreatedProducts();
+});

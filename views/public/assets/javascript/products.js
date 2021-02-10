@@ -381,9 +381,12 @@ function CreateProduct() {
                                 method: 'post',
                                 url: path + "api/productcreated",
                                 dataType: 'json',
-                                data: {},
-                                success: function (response) {
+                                data: {
+                                    name: productSelect,
+                                    brand: productSelectBrand,
+                                    price: productPrice,
                                 },
+                                success: function (response) { },
                             });
                         },
                     });

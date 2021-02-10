@@ -7,7 +7,7 @@ const productFavorites = `${path}api/productfavorites/`
 function getElementsFavoritesProducts() {
   getContext<productsFavorites>(productFavorites, (products) => {
     const sidebarProductItems = document.querySelectorAll(
-      '.gallery__sidebar-product-item'
+      '#favorites-items .gallery__sidebar-product-item'
     )
 
     sidebarProductItems.forEach((sidebarProductItem) => {

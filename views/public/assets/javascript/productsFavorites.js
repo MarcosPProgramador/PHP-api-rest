@@ -2,7 +2,7 @@
 var productFavorites = path + "api/productfavorites/";
 function getElementsFavoritesProducts() {
     getContext(productFavorites, function (products) {
-        var sidebarProductItems = document.querySelectorAll('.gallery__sidebar-product-item');
+        var sidebarProductItems = document.querySelectorAll('#favorites-items .gallery__sidebar-product-item');
         sidebarProductItems.forEach(function (sidebarProductItem) {
             sidebarProductItem.remove();
         });

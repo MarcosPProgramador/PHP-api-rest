@@ -444,9 +444,12 @@ function CreateProduct() {
                 method: 'post',
                 url: `${path}api/productcreated`,
                 dataType: 'json',
-                data: {},
-                success: (response: ResponseJson<datasJson>) => {
+                data: {
+                  name: productSelect,
+                  brand: productSelectBrand,
+                  price: productPrice,
                 },
+                success: (response: ResponseJson<datasJson>) => {},
               })
             },
           })

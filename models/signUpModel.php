@@ -13,24 +13,45 @@ class signUpModel {
         ];
 
         if (!$this->emailExists($datas['email'])) {
-            $query = '  INSERT INTO `tb_site.users`
-                        (
-                            firstname,
-                            lastname,
-                            email,
-                            password,
-                            token,
-                            lastaction
-                        )
-                        VALUES
-                        (
-                            ?,
-                            ?,
-                            ?,
-                            ?,
-                            ?,
-                            ?
-                        )
+            $query = '  INSERT
+                          INTO
+                            `tb_site.users`
+                            (
+                              firstname,
+                              lastname,
+                              email,
+                              password,
+                              token,
+                              lastaction
+                            )
+                          VALUES
+                            (
+                              ?,
+                              ?,
+                              ?,
+                              ?,
+                              ?,
+                              ?
+                            )
+            ';
+            $queryUsersOnline = 'INSERT
+                                  INTO
+                                    `tb_admin.usersonline`
+                                    (
+                                      name,
+                                      email,
+                                      token,
+                                      ip,
+                                      lastaction
+                                    )
+                                  VALUES
+                                    (
+                                      ?,
+                                      ?,
+                                      ?,
+                                      ?,
+                                      ?
+                                    )
             ';
 
             $queryDB = $this->connectDB->prepare($query);
@@ -41,6 +62,16 @@ class signUpModel {
                 $datas['email'],
                 $datas['password'],
                 $datas['token'],
+                $datas['date'],
+            ]);
+
+            $queryUsersOnline = $this->connectDB->prepare($queryUsersOnline);
+
+            $queryUsersOnline->execute([
+                $datas['firstname'],
+                $datas['email'],
+                $datas['token'],
+                $_SERVER['REMOTE_ADDR'],
                 $datas['date'],
             ]);
             setcookie('email', $datas['email'], time() + 86400, '/');

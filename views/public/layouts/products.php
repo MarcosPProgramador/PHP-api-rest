@@ -4,7 +4,7 @@
       <div class="gallery__align-buttons">
 
         <div class="gallery__sidebar-box">
-          <button class="gallery__sidebar-button" btnopen data-target="create">
+          <button class="gallery__sidebar-button" id="button-get-created" btnopen data-target="create">
             <i class="fa fa-plus" aria-hidden="true"></i>
             <span>Created</span>
           </button>
