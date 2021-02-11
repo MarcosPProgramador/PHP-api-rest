@@ -29,43 +29,53 @@ class productfavoritesService {
                                     `tb_site.products`
                                   WHERE
                                     id = ?
-                                    
+
         ';
 
         $executeFavoritesProduct = [$_POST['id']];
+        $queryFavoritesProductSelect = 'SELECT * FROM `tb_site.user.favoritesproduct` WHERE product_id = ? AND token = ?';
+        $executeFavoritesProductSelect = [$_POST['id'], $_COOKIE['token']];
 
-        $datas = $this->classUserProductModel->select($queryFavoritesProduct, $executeFavoritesProduct);
+        $connect = \tasks::ConnectDB();
+        $queryResponse = $connect->prepare($queryFavoritesProductSelect);
+        $queryResponse->execute($executeFavoritesProductSelect);
 
-        $queryFavoritesProductInsert = 'INSERT INTO
-                                        `tb_site.user.favoritesproduct`
-                                          (
-                                            name,
-                                            token,
-                                            email,
-                                            product_id,
-                                            price
-                                          )
-                                        VALUES
-                                          (
-                                            ?,
-                                            ?,
-                                            ?,
-                                            ?,
-                                            ?
-                                          )
-        ';
+        if ($queryResponse->rowCount() == 0) {
+            $datas = $this->classUserProductModel->select($queryFavoritesProduct, $executeFavoritesProduct);
 
-        $executeFavoritesProductInsert = [
-            $datas['product'],
-            $_COOKIE['token'],
-            $_COOKIE['email'],
-            intval($_POST['id']),
-            $datas['price'],
-        ];
+            $queryFavoritesProductInsert = 'INSERT INTO
+                                          `tb_site.user.favoritesproduct`
+                                            (
+                                              name,
+                                              token,
+                                              email,
+                                              product_id,
+                                              price
+                                            )
+                                          VALUES
+                                            (
+                                              ?,
+                                              ?,
+                                              ?,
+                                              ?,
+                                              ?
+                                            )
+          ';
 
-        $this->classUserProductModel->query($queryFavoritesProductInsert, $executeFavoritesProductInsert);
+            $executeFavoritesProductInsert = [
+                $datas['product'],
+                $_COOKIE['token'],
+                $_COOKIE['email'],
+                intval($_POST['id']),
+                $datas['price'],
+            ];
 
-        return 'success';
+            $this->classUserProductModel->query($queryFavoritesProductInsert, $executeFavoritesProductInsert);
+
+            return 'success';
+        }
+
+        return 'error';
 
     }
 

@@ -35,6 +35,12 @@ button {
     position: relative;
 
     .products__header {
+      position: fixed;
+      z-index: 2;
+
+      top: 0;
+      left: 0;
+      right: 0;
       .products__container {
         max-width: 1200px;
         margin: 0 auto;
@@ -64,6 +70,9 @@ button {
                   justify-content: space-between;
 
                   .addmoney__datamoney {
+                    border-radius: 10px;
+                    padding: 0 10px;
+                    background-color: var(--primary);
                     height: 50px;
                     display: flex;
                     align-items: center;
@@ -109,6 +118,9 @@ button {
                     }
                   }
                   .addmoney__datacart {
+                    border-radius: 10px;
+                    padding: 8px 15px;
+                    background-color: var(--primary);
                     .addmoney__cartbutton {
                       i {
                         color: var(--green);
@@ -127,12 +139,15 @@ button {
 // section
 
 .gallery {
+  padding-top: 120px;
   .gallery__sidebar {
     position: fixed;
     top: 0;
     z-index: 2;
     height: 100vh;
     left: 0;
+    display: flex;
+    justify-content: center;
     width: 100px;
     background-color: var(--secondary);
     @include breakpoint(tablets-3) {
@@ -146,15 +161,44 @@ button {
         .gallery__align-buttons {
           justify-content: space-around;
           flex-direction: row !important;
+          .gallery__sidebar-box {
+            .gallery__sidebar-button {
+              margin: 5px 20px !important;
+            }
+          }
         }
       }
     }
     .gallery__sidebar-top {
       .gallery__align-buttons {
+        margin-right: 6px;
+        .gallery__sidebar-box {
+          &:nth-child(1) {
+            .gallery__sidebar-button {
+              margin-top: 10px;
+              border-color: var(--green) !important;
+            }
+          }
+          &:nth-child(2) {
+            .gallery__sidebar-button {
+              border-color: var(--blue) !important;
+            }
+          }
+          &:nth-child(3) {
+            .gallery__sidebar-button {
+              border-color: var(--red) !important;
+            }
+          }
+        }
         display: flex;
         flex-direction: column;
         .gallery__sidebar-box {
           .gallery__sidebar-button {
+            border-radius: 50rem;
+            margin-bottom: 10px;
+            width: 50px;
+            height: 50px;
+            border: 1px solid var(--disabled);
             padding: 10px 5px;
             white-space: nowrap;
           }
@@ -618,6 +662,8 @@ button {
               }
               .items__product-controls {
                 display: flex;
+                width: 50px;
+                margin-left: 20px;
                 align-items: center;
                 justify-content: space-around;
 

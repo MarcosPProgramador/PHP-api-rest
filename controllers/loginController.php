@@ -54,6 +54,9 @@ class loginController {
 
             if ($query->rowCount()) {
                 $jsonSuccess = ['statusSuccess' => true, 'message' => 'sendful'];
+                unset($_COOKIE['email']);
+                unset($_COOKIE['logged']);
+                unset($_COOKIE['token']);
                 setcookie('email', $_POST['emailSend'], time() + 86400, '/');
                 setcookie('logged', true, time() + 86400, '/');
                 setcookie('token', false, time() - 86400, '/');

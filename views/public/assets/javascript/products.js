@@ -2,13 +2,14 @@
 ListFirstRequest();
 function ListFirstRequest() {
     __.ajax({
-        method: 'PUT',
+        method: 'get',
         dataType: 'json',
-        data: { value: 0 },
         url: path + "api/usersmoney/",
         success: function (response) {
-            var money = document.querySelector('#money');
-            money.textContent = String(response.datas.value);
+            if (response) {
+                var money = document.querySelector('#money');
+                money.textContent = String(response.datas.value);
+            }
         },
     });
     __.ajax({
@@ -34,19 +35,21 @@ function eventsRequest() {
         __.ajax({
             method: 'PUT',
             dataType: 'json',
-            data: { value: 200 },
             url: path + "api/usersmoney/",
             success: function (response) {
-                var value = String(response.datas.value).split('.');
-                if (value[1]) {
-                    var n = value[0], nn = value[1];
-                    var txt = n + "." + nn.slice(0, 2);
-                    money.textContent = txt;
-                }
-                else {
-                    var n = value[0];
-                    var txt = "" + n;
-                    money.textContent = txt;
+                console.log(response);
+                if (response) {
+                    var value = String(response.datas.value).split('.');
+                    if (value[1]) {
+                        var n = value[0], nn = value[1];
+                        var txt = n + "." + nn.slice(0, 2);
+                        money.textContent = txt;
+                    }
+                    else {
+                        var n = value[0];
+                        var txt = "" + n;
+                        money.textContent = txt;
+                    }
                 }
             },
         });
@@ -149,34 +152,6 @@ function ListProducts(datas, items) {
             Element: 'i',
             Class: ['fa', 'fa-plus'],
             Parent: '.items__product-create',
-        })
-            .Child({
-            Element: 'button',
-            Class: [
-                'items__product-animate',
-                'a4',
-                'items__product-buy',
-                'items__product-button-1',
-            ],
-            Attribute: [
-                {
-                    Key: "" + (items != undefined ? 'btntoggleinit' : 'btntoggle'),
-                    Value: '',
-                },
-                { Key: 'data-parent', Value: 'product-' + String(data.id) },
-            ],
-            Parent: '.items__product-controls',
-        })
-            .Child({
-            Element: 'i',
-            Class: ['fa', 'fa-bookmark'],
-            Attribute: [{ Key: 'style', Value: 'display: none;' }],
-            Parent: '.items__product-buy',
-        })
-            .Child({
-            Element: 'i',
-            Class: ['fa', 'fa-bookmark-o'],
-            Parent: '.items__product-buy',
         })
             .Child({
             Element: 'button',
@@ -293,9 +268,43 @@ function Alerts() {
                                     money.textContent = txt;
                                 }
                                 else {
-                                    var txt = "" + response.datas.price;
-                                    money.textContent = txt;
+                                    if (response.datas.price) {
+                                        var txt = "" + response.datas.price;
+                                        console.log(txt);
+                                        money.textContent = txt;
+                                    }
                                 }
+                            }
+                            var purchased = document.getElementById('purchased-product-animate');
+                            if (!(response.datas == 'error')) {
+                                purchased === null || purchased === void 0 ? void 0 : purchased.classList.remove('register-message__box--active');
+                                purchased === null || purchased === void 0 ? void 0 : purchased.classList.add('register-message__box--active');
+                                _('#purchased-product-animate').css({
+                                    borderColor: 'var(--blue)',
+                                });
+                                _('#purchased-product-animate span').css({
+                                    color: 'var(--blue)',
+                                });
+                                var children = purchased === null || purchased === void 0 ? void 0 : purchased.children[0];
+                                children.textContent = 'Purchased Product';
+                                var c = setTimeout(function () {
+                                    purchased === null || purchased === void 0 ? void 0 : purchased.classList.remove('register-message__box--active');
+                                }, 5000);
+                            }
+                            else {
+                                purchased === null || purchased === void 0 ? void 0 : purchased.classList.remove('register-message__box--active');
+                                purchased === null || purchased === void 0 ? void 0 : purchased.classList.add('register-message__box--active');
+                                _('#purchased-product-animate').css({
+                                    borderColor: 'red',
+                                });
+                                _('#purchased-product-animate span').css({
+                                    color: 'red',
+                                });
+                                var children = purchased === null || purchased === void 0 ? void 0 : purchased.children[0];
+                                children.textContent = 'You do not have money';
+                                var c = setTimeout(function () {
+                                    purchased === null || purchased === void 0 ? void 0 : purchased.classList.remove('register-message__box--active');
+                                }, 5000);
                             }
                         },
                     });

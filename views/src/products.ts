@@ -24,13 +24,14 @@ interface ResponseJson<T> {
 ListFirstRequest()
 function ListFirstRequest() {
   __.ajax({
-    method: 'PUT',
+    method: 'get',
     dataType: 'json',
-    data: { value: 0 },
     url: `${path}api/usersmoney/`,
     success: (response) => {
-      const money = <HTMLElement>document.querySelector('#money')
-      money.textContent = String(response.datas.value)
+      if (response) {
+        const money = <HTMLElement>document.querySelector('#money')
+        money.textContent = String(response.datas.value)
+      }
     },
   })
   __.ajax({
@@ -56,22 +57,25 @@ function eventsRequest() {
     __.ajax({
       method: 'PUT',
       dataType: 'json',
-      data: { value: 200 },
       url: `${path}api/usersmoney/`,
       success: (response) => {
-        const value = String(response.datas.value).split('.')
-        if (value[1]) {
-          const [n, nn] = value
+        console.log(response)
 
-          const txt = `${n}.${nn.slice(0, 2)}`
+        if (response) {
+          const value = String(response.datas.value).split('.')
+          if (value[1]) {
+            const [n, nn] = value
 
-          money.textContent = txt
-        } else {
-          const [n] = value
+            const txt = `${n}.${nn.slice(0, 2)}`
 
-          const txt = `${n}`
+            money.textContent = txt
+          } else {
+            const [n] = value
 
-          money.textContent = txt
+            const txt = `${n}`
+
+            money.textContent = txt
+          }
         }
       },
     })
@@ -179,36 +183,7 @@ function ListProducts(datas: [datasJson], items?: number) {
         Class: ['fa', 'fa-plus'],
         Parent: '.items__product-create',
       })
-      .Child({
-        Element: 'button',
-        Class: [
-          'items__product-animate',
-          'a4',
-          'items__product-buy',
-          'items__product-button-1',
-        ],
 
-        Attribute: [
-          {
-            Key: `${items != undefined ? 'btntoggleinit' : 'btntoggle'}`,
-            Value: '',
-          },
-
-          { Key: 'data-parent', Value: 'product-' + String(data.id) },
-        ],
-        Parent: '.items__product-controls',
-      })
-      .Child({
-        Element: 'i',
-        Class: ['fa', 'fa-bookmark'],
-        Attribute: [{ Key: 'style', Value: 'display: none;' }],
-        Parent: '.items__product-buy',
-      })
-      .Child({
-        Element: 'i',
-        Class: ['fa', 'fa-bookmark-o'],
-        Parent: '.items__product-buy',
-      })
       .Child({
         Element: 'button',
         Class: [
@@ -331,10 +306,48 @@ function Alerts() {
 
                   money.textContent = txt
                 } else {
-                  const txt = `${response.datas.price}`
+                  if (response.datas.price) {
+                    const txt = `${response.datas.price}`
+                    console.log(txt)
 
-                  money.textContent = txt
+                    money.textContent = txt
+                  }
                 }
+              }
+              const purchased = document.getElementById(
+                'purchased-product-animate'
+              )
+              if (!(response.datas == 'error')) {
+                purchased?.classList.remove('register-message__box--active')
+                purchased?.classList.add('register-message__box--active')
+
+                _('#purchased-product-animate').css({
+                  borderColor: 'var(--blue)',
+                })
+                _('#purchased-product-animate span').css({
+                  color: 'var(--blue)',
+                })
+                const children = purchased?.children[0] as HTMLSpanElement
+                children.textContent = 'Purchased Product'
+                const c = setTimeout(() => {
+                  purchased?.classList.remove('register-message__box--active')
+                }, 5000)
+              } else {
+                purchased?.classList.remove('register-message__box--active')
+                purchased?.classList.add('register-message__box--active')
+
+                _('#purchased-product-animate').css({
+                  borderColor: 'red',
+                })
+                _('#purchased-product-animate span').css({
+                  color: 'red',
+                })
+                const children = purchased?.children[0] as HTMLSpanElement
+                children.textContent = 'You do not have money'
+
+                const c = setTimeout(() => {
+                  purchased?.classList.remove('register-message__box--active')
+                }, 5000)
               }
             },
           })

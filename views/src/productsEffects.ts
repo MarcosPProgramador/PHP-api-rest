@@ -89,7 +89,22 @@ class productsEffects {
               dataType: 'json',
               data: { id: productId },
               url: `${path}api/productfavorites/`,
-              success: (response) => {},
+              success: (response) => {
+                const message = document.getElementById(
+                  'addedfavorites-product-animate'
+                )
+                _('#addedfavorites-product-animate').css({
+                  borderColor: 'var(--red)',
+                })
+                _('#addedfavorites-product-animate span').css({
+                  color: 'var(--red)',
+                })
+
+                message?.classList.add('register-message__box--active')
+                const c = setTimeout(() => {
+                  message?.classList.remove('register-message__box--active')
+                }, 5000)
+              },
             })
           }
         } else {
@@ -99,6 +114,10 @@ class productsEffects {
             data: { productId: productId },
             url: `${path}api/productfavorites/`,
             success: (response) => {
+              const message = document.getElementById(
+                'addedfavorites-product-animate'
+              )
+              message?.classList.remove('register-message__box--active')
             },
           })
           icon_2.removeAttribute('style')

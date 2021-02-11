@@ -6,21 +6,18 @@
         <div class="gallery__sidebar-box">
           <button class="gallery__sidebar-button" id="button-get-created" btnopen data-target="create">
             <i class="fa fa-plus" aria-hidden="true"></i>
-            <span>Created</span>
           </button>
         </div>
 
         <div class="gallery__sidebar-box">
           <button class="gallery__sidebar-button" id="button-get" btnopen data-target="buy">
             <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-            <span>Purchased</span>
           </button>
         </div>
 
         <div class="gallery__sidebar-box">
           <button class="gallery__sidebar-button" id="button-get-favorite" btnopen data-target="favorite">
             <i class="fa fa-heart" aria-hidden="true"></i>
-            <span>Favorites</span>
           </button>
         </div>
 
@@ -118,6 +115,14 @@
           <div class="register-message">
               <div id="created-product-animate" class="register-message__box">
                 <span>Created Product</span>
+              </div>
+
+              <div id="addedfavorites-product-animate" class="register-message__box">
+                <span>Added to Favorites</span>
+              </div>
+
+              <div id="purchased-product-animate" class="register-message__box">
+                <span>Purchased Product</span>
               </div>
 
           </div>

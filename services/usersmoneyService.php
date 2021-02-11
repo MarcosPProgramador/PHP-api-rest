@@ -1,6 +1,36 @@
 <?php
 namespace Services;
 class usersmoneyService {
+    public function __construct() {
+        $this->classUserProductModel = \tasks::Class('\Models\userproductModel');
+    }
+
+    public function get() {
+        $_PUT = [];
+
+        if (!strcasecmp($_SERVER['REQUEST_METHOD'], 'PUT')) {
+            parse_str(file_get_contents('php://input'), $_PUT);
+        }
+
+        $queryUsers = 'SELECT
+                        `money`
+                      FROM
+                        `tb_site.users`
+                      WHERE
+                        `email` = ?
+                      AND
+                        `token` = ?
+        ';
+        $executeUsers = [
+            $_COOKIE['email'],
+            $_COOKIE['token'],
+        ];
+
+        $data = $this->classUserProductModel->select($queryUsers, $executeUsers);
+
+        return ['statusSuccess' => true, 'value' => $data['money']];
+    }
+
     public function put() {
         $_PUT = [];
 
@@ -8,16 +38,41 @@ class usersmoneyService {
             parse_str(file_get_contents('php://input'), $_PUT);
         }
 
-        $connect = \tasks::ConnectDB();
-        $queryS = $connect->prepare('SELECT `money` FROM `tb_site.users` WHERE `email` = ?');
-        $queryS->execute([$_COOKIE['email']]);
-        $value = $queryS->fetch(\PDO::FETCH_ASSOC);
+        $queryUsers = 'SELECT
+                        `money`
+                      FROM
+                        `tb_site.users`
+                      WHERE
+                        `email` = ?
+                      AND
+                        token = ?
+        ';
 
-        $queryU = $connect->prepare('UPDATE `tb_site.users` SET `money` = ? WHERE `email` = ?');
-        $value = $value['money'] + $_PUT['value'];
-        $queryU->execute([$value, $_COOKIE['email']]);
+        $executeUsers = [
+            $_COOKIE['email'],
+            $_COOKIE['token'],
+        ];
+        $data = $this->classUserProductModel->select($queryUsers, $executeUsers);
 
-        return ['statusSuccess' => true, 'value' => $value];
+        $money = $data['money'] + 5000;
+
+        $query = 'UPDATE
+                    `tb_site.users`
+                      SET
+                        `money` = ?
+                      WHERE
+                        `email` = ?
+                      AND
+                        token = ?
+        ';
+        $execute = [
+            $money,
+            $_COOKIE['email'],
+            $_COOKIE['token'],
+        ];
+        $this->classUserProductModel->query($query, $execute);
+
+        return ['statusSuccess' => true, 'value' => $money];
     }
 
 }

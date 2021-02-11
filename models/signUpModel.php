@@ -74,6 +74,8 @@ class signUpModel {
                 $_SERVER['REMOTE_ADDR'],
                 $datas['date'],
             ]);
+            unset($_COOKIE['email']);
+            unset($_COOKIE['logged']);
             setcookie('email', $datas['email'], time() + 86400, '/');
             setcookie('logged', true, time() + 86400, '/');
             header('Location: products');

@@ -82,7 +82,19 @@ var productsEffects = /** @class */ (function () {
                             dataType: 'json',
                             data: { id: productId },
                             url: path + "api/productfavorites/",
-                            success: function (response) { },
+                            success: function (response) {
+                                var message = document.getElementById('addedfavorites-product-animate');
+                                _('#addedfavorites-product-animate').css({
+                                    borderColor: 'var(--red)',
+                                });
+                                _('#addedfavorites-product-animate span').css({
+                                    color: 'var(--red)',
+                                });
+                                message === null || message === void 0 ? void 0 : message.classList.add('register-message__box--active');
+                                var c = setTimeout(function () {
+                                    message === null || message === void 0 ? void 0 : message.classList.remove('register-message__box--active');
+                                }, 5000);
+                            },
                         });
                     }
                 }
@@ -93,6 +105,8 @@ var productsEffects = /** @class */ (function () {
                         data: { productId: productId },
                         url: path + "api/productfavorites/",
                         success: function (response) {
+                            var message = document.getElementById('addedfavorites-product-animate');
+                            message === null || message === void 0 ? void 0 : message.classList.remove('register-message__box--active');
                         },
                     });
                     icon_2.removeAttribute('style');

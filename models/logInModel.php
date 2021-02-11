@@ -43,6 +43,7 @@ class logInModel {
                     'success' => false,
                 ];
             }
+            unset($_COOKIE['email']);
             setcookie('email', $value, time() + 86400, '/');
             return [
                 'message' => 'Validado!',

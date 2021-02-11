@@ -14,7 +14,7 @@ class loginadminController {
         if (!$responsePassword['statusSuccess']) {
             return $responsePassword;
         }
-
+        unset($_COOKIE['loggedAdmin']);
         setcookie('loggedAdmin', true, time() + 86400, '/');
 
         return $responsePassword;

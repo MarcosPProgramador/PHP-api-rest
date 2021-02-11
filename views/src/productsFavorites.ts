@@ -76,7 +76,8 @@ function getElementsFavoritesProducts() {
               const id = (sidebarProductItem as HTMLElement).getAttribute(
                 'data-favorite-id'
               )
-              if (response.datas.DeletedId == id) {
+
+              if (response.datas.Deleted == id) {
                 sidebarProductItem.remove()
               }
             })

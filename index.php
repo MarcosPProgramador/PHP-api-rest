@@ -23,6 +23,7 @@ class tasks {
 
         if (!isset($_COOKIE['token'])) {
             $token = uniqid();
+            unset($_COOKIE['token']);
             setcookie('token', $token, time() + 43200, '/');
             $connect = self::ConnectDB();
             try {
@@ -43,7 +44,7 @@ class tasks {
                 $queryUsersToday->execute($executeArr);
                 $queryUsersVisited->execute($executeArr);
                 $queryUser->execute($executeArr);
-                
+
             } catch (\Throwable $th) {
                 die('Bad request');
             }

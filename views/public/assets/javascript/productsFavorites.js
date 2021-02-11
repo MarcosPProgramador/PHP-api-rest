@@ -63,7 +63,7 @@ function getElementsFavoritesProducts() {
                         var sidebarProductItems = document.querySelectorAll('.gallery__sidebar-product-item');
                         sidebarProductItems.forEach(function (sidebarProductItem) {
                             var id = sidebarProductItem.getAttribute('data-favorite-id');
-                            if (response.datas.DeletedId == id) {
+                            if (response.datas.Deleted == id) {
                                 sidebarProductItem.remove();
                             }
                         });
