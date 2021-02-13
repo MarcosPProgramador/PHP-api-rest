@@ -6,6 +6,7 @@ class productsService {
     }
 
     public function get() {
+
         $queryProducts = 'SELECT
                             *
                           FROM
@@ -21,72 +22,93 @@ class productsService {
 
     public function post() {
 
-        if (!isset($_POST['insert'])) {
-            $init = intval($_POST['init']);
-            $end = intval($_POST['end']);
+        $productName = $_POST['product'];
+        $productBrand = $_POST['brand'];
+        $productPrice = $_POST['price'];
 
-            $queryProducts = "SELECT
-                            *
-                          FROM
-                          `tb_site.products`
-                            LIMIT
-                              $init,
-                              $end
-            ";
+        $queryProductsBrand = "SELECT
+                                *
+                              FROM
+                                `tb_site.productbrand`
+                              WHERE
+                                id = ?
 
-            $datas = $this->classUserProductModel->selectAll($queryProducts, null);
+        ";
+        $queryProductsName = "SELECT
+                                *
+                              FROM
+                                `tb_site.productname`
+                              WHERE
+                                brand_id = ?
 
-            return $datas;
+        ";
+        $executeProductsBrand = [$productBrand];
+        $executeProductsName = [$productName];
 
-        } else {
-            $productName = $_POST['productName'];
-            $productBrand = $_POST['productBrand'];
-            $productPrice = $_POST['productPrice'];
+        $datasProductBrand = $this->classUserProductModel->select($queryProductsBrand, $executeProductsBrand);
+        $datasProductName = $this->classUserProductModel->select($queryProductsName, $executeProductsName);
 
-            $queryProductsBrand = "SELECT
-                                    *
-                                  FROM
-                                    `tb_site.productbrand`
-                                  WHERE
-                                    id = ?
+        $name = "{$datasProductName['product']} - {$datasProductBrand['brand']}";
 
-            ";
-            $queryProductsName = "SELECT
-                                    *
-                                  FROM
-                                    `tb_site.productname`
-                                  WHERE
-                                    brand_id = ?
+        $queryProductsInsert = "INSERT
+                                  INTO
+                                    `tb_site.products`
+                                  (
+                                    product,
+                                    image,
+                                    price
+                                  )
+                                  VALUES
+                                  (
+                                    ?,
+                                    ?,
+                                    ?
+                                  )
 
-            ";
-            $executeProductsBrand = [$productBrand];
-            $executeProductsName = [$productName];
+        ";
+        $file = $_FILES['image'];
 
-            $datasProductBrand = $this->classUserProductModel->select($queryProductsBrand, $executeProductsBrand);
-            $datasProductName = $this->classUserProductModel->select($queryProductsName, $executeProductsName);
+        if ($file['error'] === 0) {
+            $kb = 1024;
+            $fileSize = $file['size'] / $kb;
 
-            $name = "{$datasProductName['product']} - {$datasProductBrand['brand']}";
+            if ($fileSize <= 300) {
+                $types = [
+                    'image/png',
+                    'image/jpg',
+                    'image/jpeg',
+                ];
 
-            $queryProductsInsert = "INSERT
-                                      INTO
-                                        `tb_site.products`
-                                      (
-                                        product,
-                                        price
-                                      )
-                                      VALUES
-                                      (
-                                        ?,
-                                        ?
-                                      )
+                foreach ($types as $type) {
 
-            ";
-            $executeProductsInsert = [$name, floatval($productPrice)];
-            $this->classUserProductModel->query($queryProductsInsert, $executeProductsInsert);
+                    if ($type === $file['type']) {
+                        $fileName = $file['name'];
+                        $fileName = explode('.', $fileName);
+                        $fileName = uniqid() . '.' . $fileName[array_key_last($fileName)];
 
-            return $name;
+                        $fileDir = $file['tmp_name'];
+                        $newFileDir = DIR . $fileName;
+
+                        move_uploaded_file($fileDir, $newFileDir);
+
+                        $executeProductsInsert = [
+                            $name,
+                            $fileName,
+                            floatval($productPrice),
+                        ];
+                        $this->classUserProductModel->query($queryProductsInsert, $executeProductsInsert);
+
+                        return $name;
+
+                    }
+
+                }
+
+            }
 
         }
+
+        return 'error';
 
     }
 

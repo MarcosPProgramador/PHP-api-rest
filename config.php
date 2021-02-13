@@ -9,6 +9,7 @@ define('DBUSER', 'root');
 define('DBPASS', '');
 
 define('PATH', 'http://localhost/projetos/linguagens/PHP_api-rest/');
+define('DIR', __DIR__.'\\views\\public\\assets\\uploads\\');
 
 spl_autoload_register(function ($class) {
 

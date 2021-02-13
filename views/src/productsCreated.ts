@@ -6,7 +6,6 @@ interface productsCreated {
 const productCreated =
   'http://localhost/projetos/linguagens/PHP_api-rest/api/productcreated/'
 function getElementsCreatedProducts() {
-  console.log('products')
   getContext<productsCreated>(productCreated, (products) => {
     const items = document.querySelectorAll(
       ' #created-items .gallery__sidebar-product-item'

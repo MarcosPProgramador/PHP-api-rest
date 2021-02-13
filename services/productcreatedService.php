@@ -18,7 +18,6 @@ class productcreatedService {
         $executeCreatedProduct = [$_COOKIE['token']];
 
         $dataCreatedProduct = $this->classUserProductModel->selectAll($queryCreatedProduct, $executeCreatedProduct);
-
         return $dataCreatedProduct;
     }
 
@@ -31,7 +30,7 @@ class productcreatedService {
                             WHERE
                               brand_id = ?
         ';
-        $executeProductName = [$_POST['name']];
+        $executeProductName = [$_POST['product']];
 
         $queryProductBrand = 'SELECT
                                 brand

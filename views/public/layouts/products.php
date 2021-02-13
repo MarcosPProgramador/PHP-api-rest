@@ -134,7 +134,7 @@
                     <button class="register-product-button--close register-product--close">
                       <i class="fa fa-times" aria-hidden="true"></i>
                     </button>
-                    <form method="post">
+                    <form method="post" id="register-product__form">
                       <div class="register-product__groups">
                         <div class="register-product__title">
                           <h2>Create your product</h2>
@@ -143,17 +143,22 @@
                       </div>
                       <div class="register-product__groups register-product__groups-top">
                         <div class="register-product__group">
-                          <select id="product-select"></select>
+                          <select name="product" id="product-select"></select>
                         </div>
                         <div class="register-product__group">
-                          <select id="product-select-brand"></select>
+                          <select name="brand" id="product-select-brand"></select>
                         </div>
 
                       </div>
                     <div class="register-product__groups register-product__groups-bottom">
                       <div class="register-product__group">
                         <label for="price">Price</label>
-                        <input id="price" type="text">
+                        <input id="price" name="price" type="text">
+                      </div>
+                      <br>
+                      <div class="register-product__group">
+                        <label for="image">Image</label>
+                        <input id="image" name="image" type="file" style="display: none;">
                       </div>
                       <div class="register-product__group">
                         <button type="button" class="register-product__group-button register-product--close" id="register-product-button-send">Enviar</button>

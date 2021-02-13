@@ -37,7 +37,6 @@ function eventsRequest() {
             dataType: 'json',
             url: path + "api/usersmoney/",
             success: function (response) {
-                console.log(response);
                 if (response) {
                     var value = String(response.datas.value).split('.');
                     if (value[1]) {
@@ -56,21 +55,25 @@ function eventsRequest() {
     });
     _('#loadmore').Event('click', function () {
         var items = $('.items__around').length;
-        __.ajax({
-            url: path + "api/products",
-            method: 'post',
-            data: { init: items, end: 10 },
-            dataType: 'json',
-            beforeSend: function () {
-                _('#loading').css({ display: 'flex' });
-            },
-            success: function (response) {
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = 'json';
+        xhr.open('post', path + "api/product");
+        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+        xhr.onloadstart = function () {
+            _('#loading').css({ display: 'flex' });
+        };
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
                 _('#loading').css({ display: 'none' });
+                var response = xhr.response;
+                console.log(response);
                 var datas = response.datas;
-                var items = $('.items__around').length;
-                ListProducts(datas, items);
-            },
-        });
+                var items_1 = $('.items__around').length;
+                if (datas)
+                    ListProducts(datas, items_1);
+            }
+        };
+        xhr.send("init=" + items + "&end=" + 10);
     });
 }
 function ListProducts(datas, items) {
@@ -97,6 +100,18 @@ function ListProducts(datas, items) {
             Element: 'div',
             Class: 'items__image-size',
             Parent: '.items__container-img',
+        })
+            .Child({
+            Element: 'img',
+            Attribute: [
+                {
+                    Key: 'src',
+                    Value: "http://localhost/projetos/linguagens/PHP_api-rest/views/public/assets/uploads/" + data.image,
+                },
+                { Key: 'alt', Value: data.product },
+            ],
+            Class: 'items__img',
+            Parent: '.items__image-size',
         })
             .Child({
             Element: 'div',
@@ -270,7 +285,6 @@ function Alerts() {
                                 else {
                                     if (response.datas.price) {
                                         var txt = "" + response.datas.price;
-                                        console.log(txt);
                                         money.textContent = txt;
                                     }
                                 }
@@ -366,42 +380,22 @@ function CreateProduct() {
         function requestInsertProduct() {
             var registerProductButtonSend = document.getElementById('register-product-button-send');
             registerProductButtonSend === null || registerProductButtonSend === void 0 ? void 0 : registerProductButtonSend.addEventListener('click', function () {
-                var productSelect = document.getElementById('product-select').value;
-                var productSelectBrand = document.getElementById('product-select-brand').value;
                 var productPrice = document.getElementById('price').value;
                 if (productPrice && !isNaN(Number(productPrice))) {
-                    __.ajax({
-                        method: 'post',
-                        url: path + "api/products",
-                        dataType: 'json',
-                        data: {
-                            insert: true,
-                            productName: productSelect,
-                            productBrand: productSelectBrand,
-                            productPrice: productPrice,
-                        },
-                        success: function (response) {
-                            var createdProductAnimate = document.getElementById('created-product-animate');
-                            createdProductAnimate === null || createdProductAnimate === void 0 ? void 0 : createdProductAnimate.classList.add('register-message__box--active');
-                            setTimeout(function () {
-                                createdProductAnimate === null || createdProductAnimate === void 0 ? void 0 : createdProductAnimate.classList.remove('register-message__box--active');
-                            }, 5000);
-                            __.ajax({
-                                method: 'post',
-                                url: path + "api/productcreated",
-                                dataType: 'json',
-                                data: {
-                                    name: productSelect,
-                                    brand: productSelectBrand,
-                                    price: productPrice,
-                                },
-                                success: function (response) { },
-                            });
-                        },
-                    });
-                    requestInsertCreatedProduct();
+                    var form = (document.getElementById('register-product__form'));
+                    var formData = new FormData(form);
+                    var xhr = new XMLHttpRequest();
+                    xhr.responseType = 'json';
+                    xhr.open('POST', path + "api/products");
+                    xhr.send(formData);
+                    requestInsertCreatedProduct(formData);
                 }
-                function requestInsertCreatedProduct() { }
+                function requestInsertCreatedProduct(formData) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.responseType = 'json';
+                    xhr.open('POST', path + "api/productcreated");
+                    xhr.send(formData);
+                }
             });
         }
     });

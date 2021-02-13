@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11-Fev-2021 às 02:08
+-- Tempo de geração: 13-Fev-2021 às 04:23
 -- Versão do servidor: 10.4.14-MariaDB
 -- versão do PHP: 7.4.11
 
@@ -62,7 +62,7 @@ CREATE TABLE `tb_admin.usersonline` (
 --
 
 INSERT INTO `tb_admin.usersonline` (`id`, `name`, `email`, `token`, `ip`, `lastaction`) VALUES
-(32, 'Marcos', 'marcosproenca144@gmail.com', '602483120413a', '::1', '2021-02-10 22:08:04');
+(33, 'Marcos', 'marcosproenca144@gmail.com', '6026f4aa8ce34', '::1', '2021-02-13 00:23:20');
 
 -- --------------------------------------------------------
 
@@ -84,8 +84,6 @@ CREATE TABLE `tb_admin.userstoday` (
 --
 
 INSERT INTO `tb_admin.userstoday` (`id`, `name`, `email`, `token`, `ip`, `lastaction`) VALUES
-(4, 'Sabrina', 'sabrinajesus144@gmail.com', '60233130ee69a', '::1', '2021-02-09 22:09:29'),
-(9, 'Pedro', 'pedrosouza14@gmail.com', '602407b62447a', '127.0.0.1', '2021-02-10 13:47:41'),
 (10, 'João', 'joaoygo15@gmail.com', '60233747544fb', '::1', '2021-02-09 22:32:40');
 
 -- --------------------------------------------------------
@@ -102,6 +100,14 @@ CREATE TABLE `tb_admin.usersvisited` (
   `ip` varchar(100) NOT NULL,
   `lastaction` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `tb_admin.usersvisited`
+--
+
+INSERT INTO `tb_admin.usersvisited` (`id`, `name`, `email`, `token`, `ip`, `lastaction`) VALUES
+(4, 'Sabrina', 'sabrinajesus144@gmail.com', '60233130ee69a', '::1', '2021-02-09 22:09:29'),
+(5, 'Pedro', 'pedrosouza14@gmail.com', '602407b62447a', '127.0.0.1', '2021-02-10 13:47:41');
 
 -- --------------------------------------------------------
 
@@ -179,6 +185,7 @@ INSERT INTO `tb_site.productname` (`id`, `product`, `brand_id`) VALUES
 CREATE TABLE `tb_site.products` (
   `id` int(11) NOT NULL,
   `product` varchar(60) NOT NULL,
+  `image` varchar(100) NOT NULL,
   `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -186,29 +193,22 @@ CREATE TABLE `tb_site.products` (
 -- Extraindo dados da tabela `tb_site.products`
 --
 
-INSERT INTO `tb_site.products` (`id`, `product`, `price`) VALUES
-(2, 'Celular - Galaxy X1', 52301),
-(3, 'Celular - Galaxy S20', 52301),
-(4, 'Fogão - Electrolux', 5010.4),
-(5, 'Fogão - Electrolux', 5010.4),
-(6, 'Computador - Microsoft', 5010.4),
-(7, 'Computador - Microsoft', 5010.4),
-(8, 'Computador - Dell', 5010.4),
-(9, 'Computador - Dell', 5010.4),
-(10, 'Celular - Xiomi A1', 500.5),
-(11, 'Celular - Xiomi A1', 5010.4),
-(12, 'Geladeira - Consul', 5000.1),
-(13, 'Celular - Galaxy X1', 5010.4),
-(14, 'Celular - Galaxy X1', 4100.2),
-(15, 'Geladeira - Samsung', 5000.62),
-(16, 'Computador - Lenovo', 52301),
-(17, 'Fogão - Electrolux', 5010.4),
-(18, 'Fogão - Electrolux', 5010.4),
-(19, 'Geladeira - Consul', 451.51),
-(20, 'Geladeira - Consul', 451.51),
-(21, 'Celular - Galaxy X1', 5010.4),
-(22, 'Celular - Galaxy X1', 5010.4),
-(23, 'Celular - Galaxy X1', 52301);
+INSERT INTO `tb_site.products` (`id`, `product`, `image`, `price`) VALUES
+(8, 'Celular - Galaxy X1', '60273c87f3378.jpg', 5010.4),
+(9, 'Celular - Galaxy X1', '60273c9519dc9.jpg', 500.5),
+(10, 'Celular - Galaxy X1', '60273cc23701d.jpg', 451.51),
+(11, 'Celular - Galaxy X1', '60273cd07657e.jpg', 52301),
+(12, 'Celular - Galaxy X1', '60273ce1d3cb9.jpg', 451.51),
+(15, 'Computador - Microsoft', '60273e60df748.jpg', 451.51),
+(16, 'Computador - Lenovo', '60273e7a3e481.jpg', 5010.4),
+(39, 'Celular - Iphone X3', '60273e975ad94.jpg', 5010.4),
+(40, 'Fogão - Electrolux', '60273f6e27797.jpg', 5010.4),
+(42, 'Celular - Galaxy X1', '6027405d84621.jpg', 52301),
+(43, 'Celular - Galaxy X1', '602740afb6b00.jpg', 5010.4),
+(44, 'Celular - Galaxy X1', '60274143db61f.jpg', 5010.4),
+(45, 'Celular - Galaxy X1', '6027449143e3e.jpg', 52301),
+(46, 'Celular - Galaxy X1', '602744e91c244.jpg', 5010.4),
+(47, 'Celular - Galaxy X1', '60274531efd00.jpg', 5010.4);
 
 -- --------------------------------------------------------
 
@@ -229,17 +229,9 @@ CREATE TABLE `tb_site.user.createdproduct` (
 --
 
 INSERT INTO `tb_site.user.createdproduct` (`id`, `name`, `token`, `email`, `price`) VALUES
-(1, 'Geladeira - Consul', '60233130ee69a', 'sabrinajesus144@gmail.com', 5000.1),
-(2, 'Celular - Galaxy X1', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(3, 'Celular - Galaxy X1', '602407b62447a', 'pedrosouza14@gmail.com', 4100.2),
-(4, 'Geladeira - Samsung', '60233747544fb', 'joaoygo15@gmail.com', 5000.62),
-(6, 'Fogão - Electrolux', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(7, 'Fogão - Electrolux', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(8, 'Geladeira - Consul', '602483120413a', 'marcosproenca144@gmail.com', 451.51),
-(9, 'Geladeira - Consul', '602483120413a', 'marcosproenca144@gmail.com', 451.51),
-(10, 'Celular - Galaxy X1', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(11, 'Celular - Galaxy X1', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(12, 'Celular - Galaxy X1', '602483120413a', 'marcosproenca144@gmail.com', 52301);
+(1, 'Celular - Galaxy X1', '6026f4aa8ce34', 'marcosproenca144@gmail.com', 5010.4),
+(2, 'Celular - Galaxy X1', '6026f4aa8ce34', 'marcosproenca144@gmail.com', 5010.4),
+(3, 'Celular - Galaxy X1', '6026f4aa8ce34', 'marcosproenca144@gmail.com', 5010.4);
 
 -- --------------------------------------------------------
 
@@ -261,23 +253,11 @@ CREATE TABLE `tb_site.user.favoritesproduct` (
 --
 
 INSERT INTO `tb_site.user.favoritesproduct` (`id`, `name`, `token`, `email`, `product_id`, `price`) VALUES
-(1, 'Celular - Galaxy X1', '60233130ee69a', 'sabrinajesus144@gmail.com', 2, 52301),
-(2, 'Celular - Galaxy S20', '60233130ee69a', 'sabrinajesus144@gmail.com', 3, 52301),
-(3, 'Fogão - Electrolux', '60233130ee69a', 'sabrinajesus144@gmail.com', 4, 5010.4),
-(30, 'Celular - Galaxy S20', '60233747544fb', 'joaoygo15@gmail.com', 3, 52301),
-(31, 'Fogão - Electrolux', '60233747544fb', 'joaoygo15@gmail.com', 4, 5010.4),
-(32, 'Fogão - Electrolux', '60233747544fb', 'joaoygo15@gmail.com', 5, 5010.4),
-(53, 'Celular - Galaxy X1', '602483120413a', 'marcosproenca144@gmail.com', 2, 52301),
-(54, 'Celular - Galaxy S20', '602483120413a', 'marcosproenca144@gmail.com', 3, 52301),
-(58, 'Computador - Dell', '602483120413a', 'marcosproenca144@gmail.com', 9, 5010.4),
-(140, 'Fogão - Electrolux', '602483120413a', 'marcosproenca144@gmail.com', 5, 5010.4),
-(158, 'Computador - Microsoft', '602483120413a', 'marcosproenca144@gmail.com', 6, 5010.4),
-(159, 'Fogão - Electrolux', '602483120413a', 'marcosproenca144@gmail.com', 4, 5010.4),
-(162, 'Fogão - Electrolux', '602407b62447a', 'pedrosouza14@gmail.com', 4, 5010.4),
-(163, 'Fogão - Electrolux', '602407b62447a', 'pedrosouza14@gmail.com', 5, 5010.4),
-(164, 'Celular - Xiomi A1', '602407b62447a', 'pedrosouza14@gmail.com', 11, 5010.4),
-(165, 'Computador - Dell', '602407b62447a', 'pedrosouza14@gmail.com', 9, 5010.4),
-(166, 'Computador - Microsoft', '602407b62447a', 'pedrosouza14@gmail.com', 6, 5010.4);
+(1, 'Celular - Galaxy X1', '6026f4aa8ce34', 'marcosproenca144@gmail.com', 9, 500.5),
+(3, 'Celular - Galaxy X1', '6026f4aa8ce34', 'marcosproenca144@gmail.com', 10, 451.51),
+(4, 'Celular - Galaxy X1', '6026f4aa8ce34', 'marcosproenca144@gmail.com', 11, 52301),
+(5, 'Celular - Galaxy X1', '6026f4aa8ce34', 'marcosproenca144@gmail.com', 12, 451.51),
+(6, 'Computador - Microsoft', '6026f4aa8ce34', 'marcosproenca144@gmail.com', 15, 451.51);
 
 -- --------------------------------------------------------
 
@@ -298,26 +278,8 @@ CREATE TABLE `tb_site.user.purchasedproduct` (
 --
 
 INSERT INTO `tb_site.user.purchasedproduct` (`id`, `name`, `token`, `email`, `price`) VALUES
-(1, 'Fogão - Electrolux', '60233130ee69a', 'sabrinajesus144@gmail.com', 5010.4),
-(2, 'Fogão - Electrolux', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(3, 'Fogão - Electrolux', '60233747544fb', 'joaoygo15@gmail.com', 5010.4),
-(5, 'Fogão - Electrolux', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(6, 'Computador - Microsoft', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(7, 'Computador - Dell', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(8, 'Celular - Galaxy X1', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(9, 'Fogão - Electrolux', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(10, 'Fogão - Electrolux', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(11, 'Fogão - Electrolux', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(12, 'Fogão - Electrolux', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(13, 'Fogão - Electrolux', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(14, 'Fogão - Electrolux', '602483120413a', 'marcosproenca144@gmail.com', 5010.4),
-(15, 'Celular - Galaxy X1', '602407b62447a', 'pedrosouza147@gmail.com', 52301),
-(16, 'Celular - Galaxy X1', '602407b62447a', 'pedrosouza147@gmail.com', 52301),
-(17, 'Celular - Galaxy S20', '602407b62447a', 'pedrosouza147@gmail.com', 52301),
-(18, 'Celular - Galaxy S20', '602407b62447a', 'pedrosouza147@gmail.com', 52301),
-(19, 'Celular - Galaxy S20', '602407b62447a', 'pedrosouza147@gmail.com', 52301),
-(20, 'Fogão - Electrolux', '602407b62447a', 'pedrosouza147@gmail.com', 5010.4),
-(21, 'Fogão - Electrolux', '602407b62447a', 'pedrosouza147@gmail.com', 5010.4);
+(1, 'Celular - Galaxy X1', '6026f4aa8ce34', 'marcosproenca144@gmail.com', 500.5),
+(2, 'Celular - Galaxy X1', '6026f4aa8ce34', 'marcosproenca144@gmail.com', 5010.4);
 
 -- --------------------------------------------------------
 
@@ -341,7 +303,7 @@ CREATE TABLE `tb_site.users` (
 --
 
 INSERT INTO `tb_site.users` (`id`, `firstname`, `lastname`, `email`, `password`, `token`, `lastaction`, `money`) VALUES
-(2, 'Marcos', 'Proença', 'marcosproenca144@gmail.com', '1112131415', '602483120413a', '2021-02-10 22:08:04', 113075),
+(2, 'Marcos', 'Proença', 'marcosproenca144@gmail.com', '1112131415', '6026f4aa8ce34', '2021-02-13 00:23:20', 122962),
 (3, 'Sabrina', 'Jesus', 'sabrinajesus144@gmail.com', '1112131415', '60234130ee69a', '2021-02-09 22:09:29', 1789.6),
 (4, 'Pedro', 'Souza', 'pedrosouza144@gmail.com', '1112131415', '602326082ed1d', '2021-02-09 22:13:32', 0),
 (6, 'João', 'Ygo', 'joaoygo15@gmail.com', '1112131415', '60233747544fb', '2021-02-09 22:32:40', 2189.6),
@@ -399,7 +361,8 @@ ALTER TABLE `tb_site.productname`
 -- Índices para tabela `tb_site.products`
 --
 ALTER TABLE `tb_site.products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `image` (`image`);
 
 --
 -- Índices para tabela `tb_site.user.createdproduct`
@@ -440,19 +403,19 @@ ALTER TABLE `tb_admin.users`
 -- AUTO_INCREMENT de tabela `tb_admin.usersonline`
 --
 ALTER TABLE `tb_admin.usersonline`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de tabela `tb_admin.userstoday`
 --
 ALTER TABLE `tb_admin.userstoday`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `tb_admin.usersvisited`
 --
 ALTER TABLE `tb_admin.usersvisited`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `tb_site.productbrand`
@@ -470,25 +433,25 @@ ALTER TABLE `tb_site.productname`
 -- AUTO_INCREMENT de tabela `tb_site.products`
 --
 ALTER TABLE `tb_site.products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT de tabela `tb_site.user.createdproduct`
 --
 ALTER TABLE `tb_site.user.createdproduct`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `tb_site.user.favoritesproduct`
 --
 ALTER TABLE `tb_site.user.favoritesproduct`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `tb_site.user.purchasedproduct`
 --
 ALTER TABLE `tb_site.user.purchasedproduct`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `tb_site.users`

@@ -556,8 +556,12 @@ button {
             overflow: hidden;
             &.items__around--active {
               .items__image-size {
+                position: relative;
                 transform: translateY(0) !important;
                 .alert {
+                  top: 0;
+                  left: 0;
+                  position: absolute;
                   background-color: var(--rgba-05);
                   height: 100%;
                   width: 100%;
@@ -620,12 +624,16 @@ button {
               height: 400px;
 
               .items__image-size {
+                border: 2px solid var(--ternary);
                 transition: transform 500ms ease-in-out 200ms;
                 transform: translateY(44px);
                 border-radius: 5px;
                 background-color: var(--rgba-02);
                 height: 300px;
+                overflow: hidden;
                 img {
+                  object-fit: cover;
+                  border-radius: 5px;
                   width: 100%;
                   height: 100%;
                 }

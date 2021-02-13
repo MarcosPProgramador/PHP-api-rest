@@ -9,6 +9,7 @@ interface usersMoney {
 interface datasJson {
   id: number
   product: string
+  image: string
   price: string
 }
 interface datasJsonProductBrand {
@@ -59,8 +60,6 @@ function eventsRequest() {
       dataType: 'json',
       url: `${path}api/usersmoney/`,
       success: (response) => {
-        console.log(response)
-
         if (response) {
           const value = String(response.datas.value).split('.')
           if (value[1]) {
@@ -82,24 +81,30 @@ function eventsRequest() {
   })
   _('#loadmore').Event('click', () => {
     const items = $('.items__around').length
+    const xhr = new XMLHttpRequest()
+    xhr.responseType = 'json'
 
-    __.ajax({
-      url: `${path}api/products`,
-      method: 'post',
-      data: { init: items, end: 10 },
-      dataType: 'json',
-      beforeSend: function () {
-        _('#loading').css({ display: 'flex' })
-      },
-      success: function (response: ResponseJson<datasJson>) {
+    xhr.open('post', `${path}api/product`)
+
+    xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
+
+    xhr.onloadstart = () => {
+      _('#loading').css({ display: 'flex' })
+    }
+
+
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4 && xhr.status === 200) {
         _('#loading').css({ display: 'none' })
+        const response: ResponseJson<datasJson> = xhr.response
+        console.log(response)
 
         const datas = response.datas
         const items = $('.items__around').length
-
-        ListProducts(datas, items)
-      },
-    })
+        if (datas) ListProducts(datas, items)
+      }
+    }
+    xhr.send(`init=${items}&end=${10}`)
   })
 }
 
@@ -127,6 +132,18 @@ function ListProducts(datas: [datasJson], items?: number) {
         Element: 'div',
         Class: 'items__image-size',
         Parent: '.items__container-img',
+      })
+      .Child({
+        Element: 'img',
+        Attribute: [
+          {
+            Key: 'src',
+            Value: `http://localhost/projetos/linguagens/PHP_api-rest/views/public/assets/uploads/${data.image}`,
+          },
+          { Key: 'alt', Value: data.product },
+        ],
+        Class: 'items__img',
+        Parent: '.items__image-size',
       })
       .Child({
         Element: 'div',
@@ -308,7 +325,6 @@ function Alerts() {
                 } else {
                   if (response.datas.price) {
                     const txt = `${response.datas.price}`
-                    console.log(txt)
 
                     money.textContent = txt
                   }
@@ -419,56 +435,29 @@ function CreateProduct() {
         'register-product-button-send'
       )
       registerProductButtonSend?.addEventListener('click', () => {
-        const productSelect = (document.getElementById(
-          'product-select'
-        ) as HTMLSelectElement).value
-        const productSelectBrand = (document.getElementById(
-          'product-select-brand'
-        ) as HTMLSelectElement).value
         const productPrice = (document.getElementById(
           'price'
         ) as HTMLSelectElement).value
 
         if (productPrice && !isNaN(Number(productPrice))) {
-          __.ajax({
-            method: 'post',
-            url: `${path}api/products`,
-            dataType: 'json',
-            data: {
-              insert: true,
-              productName: productSelect,
-              productBrand: productSelectBrand,
-              productPrice: productPrice,
-            },
-            success: (response: ResponseJson<datasJsonProductBrand>) => {
-              const createdProductAnimate = document.getElementById(
-                'created-product-animate'
-              )
-              createdProductAnimate?.classList.add(
-                'register-message__box--active'
-              )
-              setTimeout(() => {
-                createdProductAnimate?.classList.remove(
-                  'register-message__box--active'
-                )
-              }, 5000)
-
-              __.ajax({
-                method: 'post',
-                url: `${path}api/productcreated`,
-                dataType: 'json',
-                data: {
-                  name: productSelect,
-                  brand: productSelectBrand,
-                  price: productPrice,
-                },
-                success: (response: ResponseJson<datasJson>) => {},
-              })
-            },
-          })
-          requestInsertCreatedProduct()
+          const form = <HTMLFormElement>(
+            document.getElementById('register-product__form')
+          )
+          const formData = new FormData(form)
+          const xhr = new XMLHttpRequest()
+          xhr.responseType = 'json'
+          xhr.open('POST', `${path}api/products`)
+          xhr.send(formData)
+          requestInsertCreatedProduct(formData)
         }
-        function requestInsertCreatedProduct() {}
+        function requestInsertCreatedProduct(formData: FormData) {
+          const xhr = new XMLHttpRequest()
+
+          xhr.responseType = 'json'
+
+          xhr.open('POST', `${path}api/productcreated`)
+          xhr.send(formData)
+        }
       })
     }
   })

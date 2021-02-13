@@ -1,7 +1,6 @@
 "use strict";
 var productCreated = 'http://localhost/projetos/linguagens/PHP_api-rest/api/productcreated/';
 function getElementsCreatedProducts() {
-    console.log('products');
     getContext(productCreated, function (products) {
         var items = document.querySelectorAll(' #created-items .gallery__sidebar-product-item');
         items.forEach(function (item) {
